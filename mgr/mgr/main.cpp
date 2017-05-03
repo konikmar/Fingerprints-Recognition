@@ -1,26 +1,38 @@
 #include "opencv2/opencv.hpp"
 #include "FingerprintsRecognition.h"
+#include "Preprocessing.h"
 
 using namespace cv;
+using namespace std;
 
 int main(int, char)
 {
-	VideoCapture cap(0); // open the default camera
-	if (!cap.isOpened()) // check if we succeeded
-		return -1;
-	Mat edges;
-	namedWindow("edges", 1);
-	for (;;)
-	{
-		Mat frame;
-		cap >> frame; // get a new frame from camera
-		cvtColor(frame, edges, CV_BGR2GRAY);
-		GaussianBlur(edges, edges, Size(7, 7), 1.5, 1.5);
-		Canny(edges, edges, 0, 30, 3);
-		imshow("edges", edges);
-		if (waitKey(30) >= 0)
-			break;
-	}
+	Mat image;
+	image = imread("Data/00111.bmp", 1);
+	Size size(6 * image.cols, 6 * image.rows);
+	resize(image, image, size);
+	//namedWindow("okno", 1);
+	//imshow("okno", image);
+
+	Preprocessing object;
+
+	//THRESHOLD
+	Mat image_threshold = image.clone();
+	object.Threshold(image_threshold);
+
+	//MEDIAN FILTER
+	Mat image_median = image_threshold.clone();
+	object.Filter(image_median);
+	object.Filter(image_median);
+	object.Filter(image_median);
+	object.Filter(image_median);
+
+	//DILATE	
+	Mat image_dilate = image_median.clone();
+	object.Dilate(image_dilate);
+	
+	int a;
+	cin >> a;
 	// the camera will be deinitialized automatically in VideoCapture destructor
 	return 0;
 }

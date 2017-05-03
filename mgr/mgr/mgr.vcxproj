@@ -11,7 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FingerprintsRecognition.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Preprocessing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FingerprintsRecognition.h" />
+    <ClInclude Include="Preprocessing.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FD539F90-8A82-45B6-852F-AEFE536C88FE}</ProjectGuid>
