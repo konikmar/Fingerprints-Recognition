@@ -24,12 +24,18 @@
     <ClCompile Include="Preprocessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Thinning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FingerprintsRecognition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Preprocessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Thinning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
