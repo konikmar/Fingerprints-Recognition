@@ -107,9 +107,21 @@ void Thinning::ThinningIteration(Mat& img, int iter){
 	img &= ~marker;
 }
 
-void Thinning::ThinningNegative1(Mat& image){
+void Thinning::ThinningNegative1(const Mat& src, Mat& dst){
+	dst = src.clone();
+	dst /= 255;         // convert to binary image
 
-	
+	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
+	cv::Mat diff;
+
+	do {
+		ThinningIteration(dst, 0);
+		ThinningIteration(dst, 1);
+		cv::absdiff(dst, prev, diff);
+		dst.copyTo(prev);
+	} while (cv::countNonZero(diff) > 0);
+
+	dst *= 255;
 }
 
 Thinning::~Thinning(){

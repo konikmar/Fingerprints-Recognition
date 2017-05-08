@@ -16,7 +16,7 @@ public:
 	void ThinningIteration(Mat& img, int iter);
 
 	// Thinninh Negative 1
-	void ThinningNegative1(Mat& image);
+	void ThinningNegative1(const Mat& src, Mat& dst);
 
 
 	// overloaded constructor
