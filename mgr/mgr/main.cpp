@@ -3,6 +3,7 @@
 #include "Preprocessing.h"
 #include "Thinning.h"
 #include "GaborFilter.h"
+#include "Detection.h"
 
 #include <iostream>
 #include <string>
@@ -154,7 +155,13 @@ int main(int, char)
 	ThinningObject.Thinning1(image_thinning, image_thinning);
 	ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
 
-
+	//DETECTION
+	Detection DetectionObject;
+	Mat EndingDetection;
+	Mat DeltaDetectionNegative;
+	EndingDetection = image_thinning.clone();
+	DetectionObject.EndingDetection(image_thinning, EndingDetection);
+	DetectionObject.DeltaDetection(image_thinning_negative, DeltaDetectionNegative);
 
 	int a;
 	cin >> a;
