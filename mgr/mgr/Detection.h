@@ -12,6 +12,9 @@ public:
 	// Ending Detecion
 	void EndingDetection(const Mat& src, Mat& dst);
 
+	// Analysis of pixels from border of the 5x5 window
+	int Frame5x5(const Mat& src, int, int);
+
 
 	// overloaded constructor
 	Detection();

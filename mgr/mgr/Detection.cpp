@@ -11,6 +11,7 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst){
 	int cols = src.cols;
 	int rows = src.rows;
 	int licznik = 0;
+	int licznik5x5;
 	std::vector<int> listaX;
 	std::vector<int> listaY;
 	dst = src.clone();
@@ -21,6 +22,8 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst){
 	{
 		for (int j = 55; j < cols - 20; ++j)
 		{
+
+			licznik5x5 = Frame5x5(src, i, j);
 
 			if (src.at<uchar>(i, j) == 255)
 			{
@@ -50,7 +53,7 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst){
 				}
 
 			}
-			if (licznik == 3){
+			if (licznik == 3 && licznik5x5 >= 3){
 				
 				int pomoc=0;
 				listaX.push_back(j);
@@ -59,7 +62,6 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst){
 					if ((listaX[listaX.size() - 1]>listaX[i] - 10) && (listaX[listaX.size() - 1]<listaX[i] + 10) && (listaY[listaY.size() - 1]>listaY[i] - 10) && (listaY[listaY.size() - 1] < listaY[i] + 10))
 					{	
 						pomoc = 1;
-						std::cout << "kurwa" << std::endl;
 					}
 					else
 					{
@@ -125,6 +127,60 @@ void Detection::EndingDetection(const Mat& src, Mat& dst){
 			licznik = 0;
 		}
 	}
+}
+
+int Detection::Frame5x5(const Mat& src, int i, int j){
+	int licznik = 0;
+	if (src.at<uchar>(i - 2, j - 2) == 255 && src.at<uchar>(i - 2, j - 1) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 2, j - 1) == 255 && src.at<uchar>(i - 2, j) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 2, j) == 255 && src.at<uchar>(i - 2, j + 1) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 2, j + 1) == 255 && src.at<uchar>(i - 2, j + 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 2, j + 2) == 255 && src.at<uchar>(i - 1, j + 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 1, j + 2) == 255 && src.at<uchar>(i, j + 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i, j + 2) == 255 && src.at<uchar>(i + 1, j + 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 1, j + 2) == 255 && src.at<uchar>(i + 2, j + 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 2, j + 2) == 255 && src.at<uchar>(i + 2, j + 1) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 2, j + 1) == 255 && src.at<uchar>(i + 2, j) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 2, j) == 255 && src.at<uchar>(i + 2, j - 1) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 2, j - 1) == 255 && src.at<uchar>(i + 2, j - 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 2, j - 2) == 255 && src.at<uchar>(i + 1, j - 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i + 1, j - 2) == 255 && src.at<uchar>(i, j - 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i, j - 2) == 255 && src.at<uchar>(i - 1, j - 2) == 0){
+		licznik++;
+	}
+	if (src.at<uchar>(i - 1, j - 2) == 255 && src.at<uchar>(i - 2, j - 2) == 0){
+		licznik++;
+	}
+	return licznik;
+
 }
 
 Detection::~Detection(){
