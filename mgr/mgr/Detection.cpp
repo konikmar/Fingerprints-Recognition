@@ -22,7 +22,6 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &Delta
 	{
 		for (int j = 55; j < cols - 20; ++j)
 		{
-
 			if (src.at<uchar>(i, j) == 255)
 			{
 				if (src.at<uchar>(i - 1, j - 1) == 255){
@@ -157,7 +156,7 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &Delta
 						else
 						{
 
-						}
+						}						
 					}
 					if ((pomoc == 0) && (kontur>=3))
 				{
