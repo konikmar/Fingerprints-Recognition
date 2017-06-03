@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Detection.cpp" />
+    <ClCompile Include="FalseMinutiae.cpp" />
     <ClCompile Include="FingerprintsRecognition.cpp" />
     <ClCompile Include="GaborFilter.cpp" />
     <ClCompile Include="main.cpp" />
@@ -20,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Detection.h" />
+    <ClInclude Include="FalseMinutiae.h" />
     <ClInclude Include="FingerprintsRecognition.h" />
     <ClInclude Include="GaborFilter.h" />
     <ClInclude Include="Preprocessing.h" />

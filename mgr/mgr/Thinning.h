@@ -9,13 +9,13 @@ public:
 
 	void Negative(Mat& img);
 	
-	// Thinning 1
+	// Thinning 1 - ZHANG-SUEN
 	void Thinning1(const Mat& src, Mat& dst);
 
 	// Thinning iteration method
 	void ThinningIteration(Mat& img, int iter);
 
-	// Thinninh Negative 1
+	// Thinninh Negative 1 - ZHANG-SUEN
 	void ThinningNegative1(const Mat& src, Mat& dst);
 
 

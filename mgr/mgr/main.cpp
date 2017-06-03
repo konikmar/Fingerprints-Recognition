@@ -4,6 +4,7 @@
 #include "Thinning.h"
 #include "GaborFilter.h"
 #include "Detection.h"
+#include "FalseMinutiae.h"
 
 #include <iostream>
 #include <string>
@@ -23,6 +24,7 @@ int main(int, char)
 	//namedWindow("okno", 1);
 	//imshow("okno", image);
 
+	//PREPROCESSING
 	Preprocessing PreprocesingObject;
 
 	//THRESHOLD
@@ -45,6 +47,7 @@ int main(int, char)
 	resize(image_dilate, image_dilate, size1);
 	PreprocesingObject.Threshold(image_dilate);
 	imwrite("Data/00111_a.bmp", image_dilate);	//save image after preprocessing
+	//////////////////////////////////////////////////////////////
 
 	//GABOR FILTER
 	//GaborFilter filter;
@@ -132,13 +135,13 @@ int main(int, char)
 	//	key = waitKey(0);
 	//	if (key == 27) break;
 	//}
-
-	imwrite("Data/00111_b.bmp", image_dilate);
+	/////////////////////////////////////////////////////
+	imwrite("Data/Preprocessing.bmp", image_dilate);
 
 	//THINNING
 	Thinning ThinningObject;
 	
-	Mat image_thinning = imread("Data/00111_b.bmp");
+	Mat image_thinning = imread("Data/Preprocessing.bmp");
 	//Mat image_thinning = imread("Data/00111_a.bmp");
 	//Size size3(0.2 * image_thinning.cols, 0.2 * image_thinning.rows);
 	//resize(image_thinning, image_thinning, size3);
@@ -154,14 +157,43 @@ int main(int, char)
 
 	ThinningObject.Thinning1(image_thinning, image_thinning);
 	ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
+	imwrite("Data/Thinning.bmp", image_thinning);
+	///////////////////////////////////////////////////////////////////////////
 
 	//DETECTION
 	Detection DetectionObject;
-	Mat EndingDetection;
-	Mat DeltaDetectionNegative;
-	EndingDetection = image_thinning.clone();
-	DetectionObject.EndingDetection(image_thinning, EndingDetection);
-	DetectionObject.DeltaDetection(image_thinning_negative, DeltaDetectionNegative);
+	Mat Detection;
+	Mat DetectionNegative;
+	std::vector<int> DeltaListX;
+	std::vector<int> DeltaListY;
+	std::vector<int> DeltaListX_Negative;
+	std::vector<int> DeltaListY_Negative;
+	std::vector<int> EndListX;
+	std::vector<int> EndListY;
+	std::vector<int> EndListX_Negative;
+	std::vector<int> EndListY_Negative;
+	Detection = image_thinning.clone();
+	DetectionNegative = image_thinning_negative.clone();
+	DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY);
+	DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY);
+	DetectionObject.EndingDetection(image_thinning_negative, DetectionNegative, EndListX_Negative, EndListY_Negative);
+	DetectionObject.DeltaDetection(image_thinning_negative, DetectionNegative, DeltaListX_Negative, DeltaListY_Negative);
+	imwrite("Data/MinutiaeDetection.bmp", Detection);
+	////////////////////////////////////////////////////////////////////////////////////
+	///TRZEBA BY TERAZ POROWNAC CZY ZAKONCZENIE ODPOWIADA DELCIE NA NEGATYWIE I ODWROTNIE
+	///I EWENTUALNIE WYCZYSCIC TO CO SIE NIE POKRYWA - TO ALBO W BLOKU DETECTION ALBO FALSE MINUTIAE CLEANER
+	///KOLEJNA SPRAWA TO KIERUNEK MINUCJI - TODO!
+	///KWESTIA ZAPISANIA INFORMACJI O MINUCJACH - JAKI TYP DANYCH?
+	///////////////////////////////////////////////////////////////////////////////////
+	//FALSE MINUTIAE CLEANER/////////////////////////
+	FalseMinutiae FalseMinutiaeObject;
+	Mat Minutiae;
+	Minutiae = image_thinning.clone();
+	std::vector<int> OutEndListX;
+	std::vector<int> OutEndListY;
+	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY);
+	
+	/////////////////////////////////////////////////////////////////////////
 
 	int a;
 	cin >> a;
