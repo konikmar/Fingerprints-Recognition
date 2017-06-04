@@ -1,6 +1,7 @@
 #include "FalseMinutiae.h"
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include <algorithm>
 
 using namespace cv;
 
@@ -30,7 +31,7 @@ void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, c
 				//std::cout << "Dlugosc wektora: " << Length << std::endl;
 				//circle(dst, Point(SrcEndListX[i], SrcEndListY[i]), 5, Scalar(255, 0, 255), 1, 8, 0);
 				//circle(dst, Point(SrcEndListX[j], SrcEndListY[j]), 5, Scalar(0, 0, 255), 1, 8, 0);
-				if (Length < 10)
+				if (Length < 15)
 				{
 					/*ListX[i] = 0;
 					ListY[i] = 0;
@@ -38,7 +39,7 @@ void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, c
 					ListY[j] = 0;*/
 					IndexI.push_back(i);	//zapisanie indeksow falszywych minucji
 					IndexJ.push_back(j);
-					i++;
+					
 					j = SrcEndListX.size();
 				}
 			}
@@ -47,21 +48,15 @@ void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, c
 	//DOTAD CHYBA JEST OK///
 	//PONIZEJ COS NIE GRA///
 	std::cout << "ilosc falszywych minucji: " << IndexI.size()+IndexJ.size()<< std::endl;
-	int k;
 	for (int i = 0; i < SrcEndListX.size(); i++)
 	{
 		for (int j = 0; j < IndexI.size(); j++)
 		{
-			k = 0;
-			if (i == IndexI[j])
+			if ((std::binary_search(IndexI.begin(), IndexI.end(), i) == false) && (std::binary_search(IndexJ.begin(), IndexJ.end(), i) == false))
 			{
-				k = 1;
-			}
-			if (k == 0){
 				EndListX.push_back(SrcEndListX[i]);
 				EndListY.push_back(SrcEndListY[i]);
 			}
-			
 		}
 
 	}
