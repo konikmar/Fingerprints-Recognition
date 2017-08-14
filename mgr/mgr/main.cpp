@@ -193,7 +193,7 @@ int main(int, char)
 	Minutiae = image_thinning.clone();
 	std::vector<int> OutEndListX;
 	std::vector<int> OutEndListY;
-	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY);
+	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY, Direction);
 	
 	/////////////////////////////////////////////////////////////////////////
 

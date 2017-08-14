@@ -186,147 +186,164 @@ void Detection::EndingDetection(const Mat& src, Mat& dst, std::vector<int> &EndL
 	{
 		for (int j = 55; j < cols - 20; ++j)
 		{
-			
-			if ((src.at<uchar>(i - 3, j - 3) == 255) && (src.at<uchar>(i - 3, j - 2) == 0)){
-					przejscie++;
-					kierunek = "NE";
-				}
-			if ((src.at<uchar>(i - 3, j - 2) == 255) && (src.at<uchar>(i - 3, j - 1) == 0)){
-					przejscie++;
-					kierunek = "NE";
-				}
-			if ((src.at<uchar>(i - 3, j - 1) == 255) && (src.at<uchar>(i - 3, j) == 0)){
-					przejscie++;
-					kierunek = "E";
-				}
-			if ((src.at<uchar>(i - 3, j) == 255) && (src.at<uchar>(i - 3, j + 1) == 0)){
-					przejscie++;
-					kierunek = "E";
-				}
-			if ((src.at<uchar>(i - 3, j + 1) == 255) && (src.at<uchar>(i - 3, j + 2) == 0)){
-					przejscie++;
-					kierunek = "E";
-				}
-			if ((src.at<uchar>(i - 3, j + 2) == 255) && (src.at<uchar>(i - 3, j + 3) == 0)){
-					przejscie++;
-					kierunek = "SE";
-				}
-			if ((src.at<uchar>(i - 3, j + 3) == 255) && (src.at<uchar>(i - 2, j + 3) == 0)){
-					przejscie++;
-					kierunek = "SE";
-				}
-			if ((src.at<uchar>(i - 2, j + 3) == 255) && (src.at<uchar>(i - 1, j + 3) == 0)){
-					przejscie++;
-					kierunek = "SE";
-				}
-			if ((src.at<uchar>(i - 1, j + 3) == 255) && (src.at<uchar>(i, j + 3) == 0)){
-					przejscie++;
-					kierunek = "S";
-				}
-			if ((src.at<uchar>(i, j + 3) == 255) && (src.at<uchar>(i + 1, j + 3) == 0)){
-					przejscie++;
-					kierunek = "S";
-				}
-			if ((src.at<uchar>(i + 1, j + 3) == 255) && (src.at<uchar>(i + 2, j + 3) == 0)){
-					przejscie++;
-					kierunek = "S";
-				}
-			if ((src.at<uchar>(i + 2, j + 3) == 255) && (src.at<uchar>(i + 3, j + 3) == 0)){
-					przejscie++;
-					kierunek = "SW";
-				}
-			if ((src.at<uchar>(i + 3, j + 3) == 255) && (src.at<uchar>(i + 3, j + 2) == 0)){
-					przejscie++;
-					kierunek = "SW";
-				}
-			if ((src.at<uchar>(i + 3, j + 2) == 255) && (src.at<uchar>(i + 3, j + 1) == 0)){
-					przejscie++;
-					kierunek = "SW";
-				}
-			if ((src.at<uchar>(i + 3, j + 1) == 255) && (src.at<uchar>(i + 3, j) == 0)){
-					przejscie++;
-					kierunek = "W";
-				}
-			if ((src.at<uchar>(i + 3, j) == 255) && (src.at<uchar>(i + 3, j - 1) == 0)){
-					przejscie++;
-					kierunek = "W";
-				}
-			if ((src.at<uchar>(i + 3, j - 1) == 255) && (src.at<uchar>(i + 3, j - 2) == 0)){
-					przejscie++;
-					kierunek = "W";
-				}
-			if ((src.at<uchar>(i + 3, j - 2) == 255) && (src.at<uchar>(i + 3, j - 3) == 0)){
-					przejscie++;
-					kierunek = "NW";
-				}
-			if ((src.at<uchar>(i + 3, j - 3) == 255) && (src.at<uchar>(i + 2, j - 3) == 0)){
-					przejscie++;
-					kierunek = "NW";
-				}
-			if ((src.at<uchar>(i + 2, j - 3) == 255) && (src.at<uchar>(i + 1, j - 3) == 0)){
-					przejscie++;
-					kierunek = "NW";
-				}
-			if ((src.at<uchar>(i + 1, j - 3) == 255) && (src.at<uchar>(i, j - 3) == 0)){
-					przejscie++;
-					kierunek = "N";
-				}
-			if ((src.at<uchar>(i, j - 3) == 255) && (src.at<uchar>(i - 1, j - 3) == 0)){
-					przejscie++;
-					kierunek = "N";
-				}
-			if ((src.at<uchar>(i - 1, j - 3) == 255) && (src.at<uchar>(i - 2, j - 3) == 0)){
-					przejscie++;
-					kierunek = "N";
-				}
-			if ((src.at<uchar>(i - 2, j - 3) == 255) && (src.at<uchar>(i - 3, j - 3) == 0)){
-					przejscie++;
-					kierunek = "NE";
-				}
-
-
-
-
-			/*if (src.at<uchar>(i, j) == 255)
+			if (src.at<uchar>(i, j) == 255)
 			{
-				if (src.at<uchar>(i - 1, j - 1) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i - 1, j) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i - 1, j + 1) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i, j - 1) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i, j + 1) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i + 1, j - 1) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i + 1, j) == 255){
-					licznik++;
-				}
-				if (src.at<uchar>(i + 1, j + 1) == 255){
-					licznik++;
-				}*/
 
-			//}
-			//if (licznik == 1){
-			if (przejscie == 1){
-				circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
-				EndListX.push_back(j);
-				EndListY.push_back(i);
-				Direction.push_back(kierunek);
-				std::cout << "wykryto zakonczenie: pkt: " << i << " ," << j << std::endl;
-				std::cout << "kierunek minucji: " << kierunek << std::endl;
+				/*if ((src.at<uchar>(i - 3, j - 3) == 255) && (src.at<uchar>(i - 3, j - 2) == 0)){
+					przejscie++;
+					kierunek = "NE";
+					}
+					if ((src.at<uchar>(i - 3, j - 2) == 255) && (src.at<uchar>(i - 3, j - 1) == 0)){
+					przejscie++;
+					kierunek = "NE";
+					}
+					if ((src.at<uchar>(i - 3, j - 1) == 255) && (src.at<uchar>(i - 3, j) == 0)){
+					przejscie++;
+					kierunek = "E";
+					}
+					if ((src.at<uchar>(i - 3, j) == 255) && (src.at<uchar>(i - 3, j + 1) == 0)){
+					przejscie++;
+					kierunek = "E";
+					}
+					if ((src.at<uchar>(i - 3, j + 1) == 255) && (src.at<uchar>(i - 3, j + 2) == 0)){
+					przejscie++;
+					kierunek = "E";
+					}
+					if ((src.at<uchar>(i - 3, j + 2) == 255) && (src.at<uchar>(i - 3, j + 3) == 0)){
+					przejscie++;
+					kierunek = "SE";
+					}
+					if ((src.at<uchar>(i - 3, j + 3) == 255) && (src.at<uchar>(i - 2, j + 3) == 0)){
+					przejscie++;
+					kierunek = "SE";
+					}
+					if ((src.at<uchar>(i - 2, j + 3) == 255) && (src.at<uchar>(i - 1, j + 3) == 0)){
+					przejscie++;
+					kierunek = "SE";
+					}
+					if ((src.at<uchar>(i - 1, j + 3) == 255) && (src.at<uchar>(i, j + 3) == 0)){
+					przejscie++;
+					kierunek = "S";
+					}
+					if ((src.at<uchar>(i, j + 3) == 255) && (src.at<uchar>(i + 1, j + 3) == 0)){
+					przejscie++;
+					kierunek = "S";
+					}
+					if ((src.at<uchar>(i + 1, j + 3) == 255) && (src.at<uchar>(i + 2, j + 3) == 0)){
+					przejscie++;
+					kierunek = "S";
+					}
+					if ((src.at<uchar>(i + 2, j + 3) == 255) && (src.at<uchar>(i + 3, j + 3) == 0)){
+					przejscie++;
+					kierunek = "SW";
+					}
+					if ((src.at<uchar>(i + 3, j + 3) == 255) && (src.at<uchar>(i + 3, j + 2) == 0)){
+					przejscie++;
+					kierunek = "SW";
+					}
+					if ((src.at<uchar>(i + 3, j + 2) == 255) && (src.at<uchar>(i + 3, j + 1) == 0)){
+					przejscie++;
+					kierunek = "SW";
+					}
+					if ((src.at<uchar>(i + 3, j + 1) == 255) && (src.at<uchar>(i + 3, j) == 0)){
+					przejscie++;
+					kierunek = "W";
+					}
+					if ((src.at<uchar>(i + 3, j) == 255) && (src.at<uchar>(i + 3, j - 1) == 0)){
+					przejscie++;
+					kierunek = "W";
+					}
+					if ((src.at<uchar>(i + 3, j - 1) == 255) && (src.at<uchar>(i + 3, j - 2) == 0)){
+					przejscie++;
+					kierunek = "W";
+					}
+					if ((src.at<uchar>(i + 3, j - 2) == 255) && (src.at<uchar>(i + 3, j - 3) == 0)){
+					przejscie++;
+					kierunek = "NW";
+					}
+					if ((src.at<uchar>(i + 3, j - 3) == 255) && (src.at<uchar>(i + 2, j - 3) == 0)){
+					przejscie++;
+					kierunek = "NW";
+					}
+					if ((src.at<uchar>(i + 2, j - 3) == 255) && (src.at<uchar>(i + 1, j - 3) == 0)){
+					przejscie++;
+					kierunek = "NW";
+					}
+					if ((src.at<uchar>(i + 1, j - 3) == 255) && (src.at<uchar>(i, j - 3) == 0)){
+					przejscie++;
+					kierunek = "N";
+					}
+					if ((src.at<uchar>(i, j - 3) == 255) && (src.at<uchar>(i - 1, j - 3) == 0)){
+					przejscie++;
+					kierunek = "N";
+					}
+					if ((src.at<uchar>(i - 1, j - 3) == 255) && (src.at<uchar>(i - 2, j - 3) == 0)){
+					przejscie++;
+					kierunek = "N";
+					}
+					if ((src.at<uchar>(i - 2, j - 3) == 255) && (src.at<uchar>(i - 3, j - 3) == 0)){
+					przejscie++;
+					kierunek = "NE";
+					}
+					}*/
+
+				if (src.at<uchar>(i, j) == 255)
+				{
+					if (src.at<uchar>(i - 1, j - 1) == 255)
+					{
+						licznik++;
+						kierunek = "SE";
+					}
+					if (src.at<uchar>(i - 1, j) == 255) 
+					{
+						licznik++;
+						kierunek = "E";
+					}
+					if (src.at<uchar>(i - 1, j + 1) == 255)
+					{
+						licznik++;
+						kierunek = "NE";
+					}
+					if (src.at<uchar>(i, j + 1) == 255)
+					{
+						licznik++;
+						kierunek = "N";
+					}
+					if (src.at<uchar>(i + 1, j + 1) == 255)
+					{
+						licznik++;
+						kierunek = "NW";
+					}
+					if (src.at<uchar>(i + 1, j) == 255)
+					{
+						licznik++;
+						kierunek = "W";
+					}
+					if (src.at<uchar>(i + 1, j - 1) == 255)
+					{
+						licznik++;
+						kierunek = "SW";
+					}
+					if (src.at<uchar>(i, j - 1) == 255)
+					{
+						licznik++;
+						kierunek = "S";
+					}
+				}
+
+				if (licznik == 1){
+					//if (przejscie == 1){
+					circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
+					EndListX.push_back(j);
+					EndListY.push_back(i);
+					Direction.push_back(kierunek);
+					//std::cout << "wykryto zakonczenie: pkt: " << i << " ," << j << std::endl;
+					//std::cout << "kierunek minucji: " << kierunek << std::endl;
+				}
+
+				licznik = 0;
+				//przejscie = 0;
 			}
-			
-			//licznik = 0;
-			przejscie = 0;
 		}
 	}
 }

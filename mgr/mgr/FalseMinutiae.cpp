@@ -11,7 +11,7 @@ FalseMinutiae::FalseMinutiae(){
 void FalseMinutiae::DeltaDetectionCleaner(const std::vector<int> SrcDeltaListX, const std::vector<int> SrcDeltaListY, Mat& dst, std::vector<int> DeltaListX, std::vector<int> DeltaListY){
 
 }
-void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, Mat& dst, std::vector<int> EndListX, std::vector<int> EndListY){
+void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, Mat& dst, std::vector<int> EndListX, std::vector<int> EndListY, std::vector<std::string> Direction){
 	double Length;
 	cvtColor(dst, dst, COLOR_GRAY2RGB);
 	std::cout << "liczba minucji: " << SrcEndListX.size() << std::endl;
