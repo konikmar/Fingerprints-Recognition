@@ -170,16 +170,18 @@ int main(int, char)
 	std::vector<int> DeltaListY_Negative;
 	std::vector<int> EndListX;
 	std::vector<int> EndListY;
-	std::vector<string> Direction;
+	std::vector<string> Direction_Ending;
+	std::vector<string> Direction_Delta;
 	std::vector<int> EndListX_Negative;
 	std::vector<int> EndListY_Negative;
-	std::vector<string> Direction_Negative;
+	std::vector<string> Direction_Ending_Negative;
+	std::vector<string> Direction_Delta_Negative;
 	Detection = image_thinning.clone();
 	DetectionNegative = image_thinning_negative.clone();
-	DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction);
-	DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY);
-	DetectionObject.EndingDetection(image_thinning_negative, DetectionNegative, EndListX_Negative, EndListY_Negative, Direction_Negative);
-	DetectionObject.DeltaDetection(image_thinning_negative, DetectionNegative, DeltaListX_Negative, DeltaListY_Negative);
+	DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+	DetectionObject.EndingDetection(image_thinning_negative, DetectionNegative, EndListX_Negative, EndListY_Negative, Direction_Ending_Negative);
+	DetectionObject.DeltaDetection(image_thinning_negative, DetectionNegative, DeltaListX_Negative, DeltaListY_Negative, Direction_Delta_Negative);
 	imwrite("Data/MinutiaeDetection.bmp", Detection);
 	////////////////////////////////////////////////////////////////////////////////////
 	///TRZEBA BY TERAZ POROWNAC CZY ZAKONCZENIE ODPOWIADA DELCIE NA NEGATYWIE I ODWROTNIE
@@ -193,7 +195,8 @@ int main(int, char)
 	Minutiae = image_thinning.clone();
 	std::vector<int> OutEndListX;
 	std::vector<int> OutEndListY;
-	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY, Direction);
+	std::vector<string> OutDirection_Ending;
+	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY, Direction_Ending, OutDirection_Ending);
 	
 	/////////////////////////////////////////////////////////////////////////
 
