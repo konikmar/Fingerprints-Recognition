@@ -25,6 +25,9 @@ public:
 	// Virtual descrutor
 	~Thinning();
 
+	// Zhang-Suen
+	void ZhangSuenThinning(const Mat& src, Mat& dst);
+
 private:
 	Mat fingerprint;
 };

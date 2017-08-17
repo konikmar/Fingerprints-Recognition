@@ -126,3 +126,125 @@ void Thinning::ThinningNegative1(const Mat& src, Mat& dst){
 
 Thinning::~Thinning(){
 }
+
+void Thinning::ZhangSuenThinning(const Mat& src, Mat& dst) // na podstawie: https://rosettacode.org/wiki/Zhang-Suen_thinning_algorithm
+{
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	int A=0; // number of transitions from 255 to 0 in the sequence P2,P3,P4,P5,P6,P7,P8,P9,P2
+	int B=0; // number of black pixel neighbours of P1
+	bool change = true;
+
+	while (change == true)
+	{
+
+		change = false;
+
+		// STEP 1
+		for (int i = 1; i < src.rows - 1; i++)
+		{
+			for (int j = 1; j < src.cols - 1; j++)
+			{
+
+				P1 = src.at<uchar>(i, j);
+
+				if (P1 == 0)
+				{
+					P2 = src.at<uchar>(i - 1, j);
+					P3 = src.at<uchar>(i - 1, j + 1);
+					P4 = src.at<uchar>(i, j + 1);
+					P5 = src.at<uchar>(i + 1, j + 1);
+					P6 = src.at<uchar>(i + 1, j);
+					P7 = src.at<uchar>(i + 1, j - 1);
+					P8 = src.at<uchar>(i, j - 1);
+					P9 = src.at<uchar>(i - 1, j - 1);
+
+					//count A
+					if (P2 == 255 && P3 == 0) A++;
+					if (P3 == 255 && P4 == 0) A++;
+					if (P4 == 255 && P5 == 0) A++;
+					if (P5 == 255 && P6 == 0) A++;
+					if (P6 == 255 && P7 == 0) A++;
+					if (P7 == 255 && P8 == 0) A++;
+					if (P8 == 255 && P9 == 0) A++;
+					if (P9 == 255 && P2 == 0) A++;
+
+					//count B
+					if (P2 == 0) B++;
+					if (P3 == 0) B++;
+					if (P4 == 0) B++;
+					if (P5 == 0) B++;
+					if (P6 == 0) B++;
+					if (P7 == 0) B++;
+					if (P8 == 0) B++;
+					if (P9 == 0) B++;
+
+					if (A == 1 && B >= 2 && B <= 6 && (P2 == 255 || P4 == 255 || P6 == 255) && (P4 == 255 || P6 == 255 || P8 == 255)) 
+					{
+						dst.at<uchar>(i, j) = 255;
+						change = true;
+					}
+
+					A = 0;
+					B = 0;
+				}
+
+			}
+		}
+
+		// STEP 2
+		for (int i = 1; i < src.rows - 1; i++)
+		{
+			for (int j = 1; j < src.cols - 1; j++)
+			{
+
+				P1 = src.at<uchar>(i, j);
+
+				if (P1 == 0)
+				{
+					P2 = src.at<uchar>(i - 1, j);
+					P3 = src.at<uchar>(i - 1, j + 1);
+					P4 = src.at<uchar>(i, j + 1);
+					P5 = src.at<uchar>(i + 1, j + 1);
+					P6 = src.at<uchar>(i + 1, j);
+					P7 = src.at<uchar>(i + 1, j - 1);
+					P8 = src.at<uchar>(i, j - 1);
+					P9 = src.at<uchar>(i - 1, j - 1);
+
+					//count A
+					if (P2 == 255 && P3 == 0) A++;
+					if (P3 == 255 && P4 == 0) A++;
+					if (P4 == 255 && P5 == 0) A++;
+					if (P5 == 255 && P6 == 0) A++;
+					if (P6 == 255 && P7 == 0) A++;
+					if (P7 == 255 && P8 == 0) A++;
+					if (P8 == 255 && P9 == 0) A++;
+					if (P9 == 255 && P2 == 0) A++;
+
+					//count B
+					if (P2 == 0) B++;
+					if (P3 == 0) B++;
+					if (P4 == 0) B++;
+					if (P5 == 0) B++;
+					if (P6 == 0) B++;
+					if (P7 == 0) B++;
+					if (P8 == 0) B++;
+					if (P9 == 0) B++;
+
+					if (A == 1 && B >= 2 && B <= 6 && (P2 == 255 || P4 == 255 || P8 == 255) && (P2 == 255 || P6 == 255 || P8 == 255))
+					{
+						dst.at<uchar>(i, j) = 255;
+						change = true;
+					}
+
+					A = 0;
+					B = 0;
+				}
+
+			}
+		}
+
+	}
+
+	Negative(dst); 
+	
+}
