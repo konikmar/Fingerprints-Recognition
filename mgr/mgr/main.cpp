@@ -158,7 +158,8 @@ int main(int, char)
 
 	ThinningObject.Thinning1(image_thinning, image_thinning);
 	ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
-	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning);
+	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
+	//ThinningObject.GuoHallThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
 
