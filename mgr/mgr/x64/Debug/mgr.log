@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 19.08.2017 19:14:55.
      1>Project "C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -9,17 +10,31 @@
      1>FalseMinutiae.cpp(144): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
      1>FalseMinutiae.cpp(150): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
      1>FalseMinutiae.cpp(156): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+=======
+﻿Build started 18.08.2017 21:32:05.
+     1>Project "D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\Ceemple\OpenCV4VS\include /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Thinning.cpp main.cpp
+         main.cpp
+         Thinning.cpp
+     1>Thinning.cpp(266): warning C4101: 'P1' : unreferenced local variable
+         Generating Code...
+>>>>>>> origin/master
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\x64\Debug\mgr.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Ceemple\OpenCV4VS\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib StatTimer.lib clBLAS.lib clFFT.lib opencv_calib3d300d.lib opencv_core300d.lib opencv_cuda300d.lib opencv_cudaarithm300d.lib opencv_cudabgsegm300d.lib opencv_cudacodec300d.lib opencv_cudafeatures2d300d.lib opencv_cudafilters300d.lib opencv_cudaimgproc300d.lib opencv_cudalegacy300d.lib opencv_cudaoptflow300d.lib opencv_cudastereo300d.lib opencv_cudawarping300d.lib opencv_cudev300d.lib opencv_features2d300d.lib opencv_flann300d.lib opencv_highgui300d.lib opencv_imgcodecs300d.lib opencv_imgproc300d.lib opencv_ml300d.lib opencv_objdetect300d.lib opencv_photo300d.lib opencv_shape300d.lib opencv_stitching300d.lib opencv_superres300d.lib opencv_ts300d.lib opencv_video300d.lib opencv_videoio300d.lib opencv_videostab300d.lib opengl32.lib glu32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\x64\Debug\mgr.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\x64\Debug\mgr.lib" /MACHINE:X64 x64\Debug\Detection.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\x64\Debug\mgr.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Ceemple\OpenCV4VS\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib StatTimer.lib clBLAS.lib clFFT.lib opencv_calib3d300d.lib opencv_core300d.lib opencv_cuda300d.lib opencv_cudaarithm300d.lib opencv_cudabgsegm300d.lib opencv_cudacodec300d.lib opencv_cudafeatures2d300d.lib opencv_cudafilters300d.lib opencv_cudaimgproc300d.lib opencv_cudalegacy300d.lib opencv_cudaoptflow300d.lib opencv_cudastereo300d.lib opencv_cudawarping300d.lib opencv_cudev300d.lib opencv_features2d300d.lib opencv_flann300d.lib opencv_highgui300d.lib opencv_imgcodecs300d.lib opencv_imgproc300d.lib opencv_ml300d.lib opencv_objdetect300d.lib opencv_photo300d.lib opencv_shape300d.lib opencv_stitching300d.lib opencv_superres300d.lib opencv_ts300d.lib opencv_video300d.lib opencv_videoio300d.lib opencv_videostab300d.lib opengl32.lib glu32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\x64\Debug\mgr.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\x64\Debug\mgr.lib" /MACHINE:X64 x64\Debug\Detection.obj
          x64\Debug\FalseMinutiae.obj
          x64\Debug\FingerprintsRecognition.obj
          x64\Debug\GaborFilter.obj
          x64\Debug\main.obj
          x64\Debug\Preprocessing.obj
          x64\Debug\Thinning.obj
-         mgr.vcxproj -> C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\x64\Debug\mgr.exe
-     1>Done Building Project "C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" (Build target(s)).
+         mgr.vcxproj -> D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\x64\Debug\mgr.exe
+     1>Done Building Project "D:\Fingerprints Recognition\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" (Build target(s)).
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:02.31
+=======
+Time Elapsed 00:00:01.57
+>>>>>>> origin/master

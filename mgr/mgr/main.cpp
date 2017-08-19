@@ -19,6 +19,7 @@ int main(int, char)
 {
 	Mat image;
 	image = imread("Data/00111.bmp", 1);
+	//image = imread("Data/fingerprint.png", 1); // non-real, simple fingerprint
 	Size size(6 * image.cols, 6 * image.rows);
 	resize(image, image, size);
 	//namedWindow("okno", 1);
@@ -157,6 +158,8 @@ int main(int, char)
 
 	ThinningObject.Thinning1(image_thinning, image_thinning);
 	ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
+	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
+	//ThinningObject.GuoHallThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
 

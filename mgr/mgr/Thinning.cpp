@@ -126,3 +126,254 @@ void Thinning::ThinningNegative1(const Mat& src, Mat& dst){
 
 Thinning::~Thinning(){
 }
+
+void Thinning::ZhangSuenThinning(const Mat& src, Mat& dst) // na podstawie: https://rosettacode.org/wiki/Zhang-Suen_thinning_algorithm
+															// tak jak mowilem, dziala troche dziwnie, duzo z tym kombinowalem ale jeszcze nie zdiagnozowalem dlaczego nie dziala tak samo jak ten z internetu (moze to byc jakas prosta rzecz, ktorej nie widze)
+{
+	Negative(dst);
+	dst = src.clone();
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	int A=0; // number of transitions from 255 to 0 in the sequence P2,P3,P4,P5,P6,P7,P8,P9,P2
+	int B=0; // number of black pixel neighbours of P1
+	bool change = true;
+	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
+	cv::Mat diff;
+
+	do
+	{
+
+		change = false;
+
+		// STEP 1
+		for (int i = 1; i < src.rows - 1; ++i)
+		{
+			for (int j = 1; j < src.cols - 1; ++j)
+			{
+
+				P1 = src.at<uchar>(i, j);
+
+				//if (P1 == 255)
+				//{
+
+					P2 = src.at<uchar>(i, j - 1);
+					P3 = src.at<uchar>(i + 1, j - 1);
+					P4 = src.at<uchar>(i + 1, j);
+					P5 = src.at<uchar>(i + 1, j + 1);
+					P6 = src.at<uchar>(i, j + 1);
+					P7 = src.at<uchar>(i - 1, j + 1);
+					P8 = src.at<uchar>(i - 1, j);
+					P9 = src.at<uchar>(i - 1, j - 1);
+
+					//count A
+					if (P2 == 0 && P3 == 255) A++;
+					if (P3 == 0 && P4 == 255) A++;
+					if (P4 == 0 && P5 == 255) A++;
+					if (P5 == 0 && P6 == 255) A++;
+					if (P6 == 0 && P7 == 255) A++;
+					if (P7 == 0 && P8 == 255) A++;
+					if (P8 == 0 && P9 == 255) A++;
+					if (P9 == 0 && P2 == 255) A++;
+
+					//count B
+					if (P2 == 255) B++;
+					if (P3 == 255) B++;
+					if (P4 == 255) B++;
+					if (P5 == 255) B++;
+					if (P6 == 255) B++;
+					if (P7 == 255) B++;
+					if (P8 == 255) B++;
+					if (P9 == 255) B++;
+
+					if (A == 1 && B >= 2 && B <= 6 && (P2 == 0 || P4 == 0 || P6 == 0) && (P4 == 0 || P6 == 0 || P8 == 0))
+					{
+						dst.at<uchar>(i, j) = 0;
+						change = true;
+					}
+
+					A = 0;
+					B = 0;
+				//}
+
+			}
+		}
+
+		// STEP 2
+		for (int i = 1; i < src.rows - 1; ++i)
+		{
+			for (int j = 1; j < src.cols - 1; ++j)
+			{
+
+				P1 = src.at<uchar>(i, j);
+
+				//if (P1 == 255)
+				//{
+
+					P2 = src.at<uchar>(i, j - 1);
+					P3 = src.at<uchar>(i + 1, j - 1);
+					P4 = src.at<uchar>(i + 1, j);
+					P5 = src.at<uchar>(i + 1, j + 1);
+					P6 = src.at<uchar>(i, j + 1);
+					P7 = src.at<uchar>(i - 1, j + 1);
+					P8 = src.at<uchar>(i - 1, j);
+					P9 = src.at<uchar>(i - 1, j - 1);
+
+					//count A
+					if (P2 == 0 && P3 == 255) A++;
+					if (P3 == 0 && P4 == 255) A++;
+					if (P4 == 0 && P5 == 255) A++;
+					if (P5 == 0 && P6 == 255) A++;
+					if (P6 == 0 && P7 == 255) A++;
+					if (P7 == 0 && P8 == 255) A++;
+					if (P8 == 0 && P9 == 255) A++;
+					if (P9 == 0 && P2 == 255) A++;
+
+					//count B
+					if (P2 == 255) B++;
+					if (P3 == 255) B++;
+					if (P4 == 255) B++;
+					if (P5 == 255) B++;
+					if (P6 == 255) B++;
+					if (P7 == 255) B++;
+					if (P8 == 255) B++;
+					if (P9 == 255) B++;
+
+					if (A == 1 && B >= 2 && B <= 6 && (P2 == 0 || P4 == 0 || P8 == 0) && (P2 == 0 || P6 == 0 || P8 == 0))
+					{
+						dst.at<uchar>(i, j) = 0;
+						change = true;
+					}
+
+					A = 0;
+					B = 0;
+				//}
+
+			}
+		}
+
+		cv::absdiff(dst, prev, diff);
+		dst.copyTo(prev);
+
+	} while (cv::countNonZero(diff) > 0);
+	
+}
+
+void Thinning::GuoHallThinning(const Mat& src, Mat& dst) //tez na razie dziala troche dziwnie (i dlugo) - poki co jest na bazie tego co tu: http://answers.opencv.org/question/3207/what-is-a-good-thinning-algorithm-for-getting-the-skeleton-of-characters-for-ocr/
+														 //ale widze, ze tu sa niezle rozpisane algorytmy, wiec pozniej sprobuje zrobic na podstawie tego: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.232.1226&rep=rep1&type=pdf 
+{	
+	src.copyTo(dst);
+	bool change = true;
+
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	
+	dst /= 255;
+
+	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
+	cv::Mat diff;
+
+	do
+	{
+		// STEP 1
+		for (int i = 1; i < src.rows - 1; i++)
+		{
+			for (int j = 1; j < src.cols - 1; j++)
+			{
+				//if (src.at<uchar>(i, j) == 255)
+				//{
+					P2 = src.at<uchar>(i, j - 1);
+					P3 = src.at<uchar>(i + 1, j - 1);
+					P4 = src.at<uchar>(i + 1, j);
+					P5 = src.at<uchar>(i + 1, j + 1);
+					P6 = src.at<uchar>(i, j + 1);
+					P7 = src.at<uchar>(i - 1, j + 1);
+					P8 = src.at<uchar>(i - 1, j);
+					P9 = src.at<uchar>(i - 1, j - 1);
+
+					int C = int(~P8 & (P7 | P6)) +
+						int(~P6 & (P5 | P4)) +
+						int(~P4 & (P3 | P2)) +
+						int(~P2 & (P9 | P8));
+
+				if (C == 1)
+				{
+					/// calculate N
+					int N1 = int(P9 | P8) +
+						int(P7 | P6) +
+						int(P5 | P4) +
+						int(P3 | P2);
+					int N2 = int(P8 | P7) +
+						int(P6 | P5) +
+						int(P4 | P3) +
+						int(P2 | P9);
+					int N = min(N1, N2);
+					if ((N == 2) || (N == 3))
+					{
+						/// calculate criteria 3
+						int c3 = (P8 | P7 | ~P5) & P6;
+						if (c3 == 0)
+						{
+							dst.at<uchar>(i, j) = 0;
+							change = true;
+						}
+					}
+				}
+				//}
+			}
+		}
+
+		// STEP 2
+		for (int i = 1; i < src.rows - 1; i++)
+		{
+			for (int j = 1; j < src.cols - 1; j++)
+			{
+				/*if (src.at<uchar>(i, j) == 255)
+				{*/
+				/// get 8 neighbors
+				/// calculate C(p)
+
+				P2 = src.at<uchar>(i, j - 1);
+				P3 = src.at<uchar>(i + 1, j - 1);
+				P4 = src.at<uchar>(i + 1, j);
+				P5 = src.at<uchar>(i + 1, j + 1);
+				P6 = src.at<uchar>(i, j + 1);
+				P7 = src.at<uchar>(i - 1, j + 1);
+				P8 = src.at<uchar>(i - 1, j);
+				P9 = src.at<uchar>(i - 1, j - 1);
+
+				int C = int(~P8 & (P7 | P6)) +
+					int(~P6 & (P5 | P4)) +
+					int(~P4 & (P3 | P2)) +
+					int(~P2 & (P9 | P8));
+
+				if (C == 1)
+				{
+					/// calculate N
+					int N1 = int(P9 | P8) +
+						int(P7 | P6) +
+						int(P5 | P4) +
+						int(P3 | P2);
+					int N2 = int(P8 | P7) +
+						int(P6 | P5) +
+						int(P4 | P3) +
+						int(P2 | P9);
+					int N = min(N1, N2);
+					if ((N == 2) || (N == 3))
+					{
+						int E = (P4 | P3 | ~P9) & P2;
+						if (E == 0)
+						{
+							dst.at<uchar>(i, j) = 0;
+							change = true;
+						}
+					}
+				}
+				//}
+			}
+		}
+
+		cv::absdiff(dst, prev, diff);
+		dst.copyTo(prev);
+
+	} while (cv::countNonZero(diff) > 0);
+
+	dst *= 255;
+}
