@@ -9,7 +9,53 @@ using namespace cv;
 FalseMinutiae::FalseMinutiae(){
 }
 void FalseMinutiae::DeltaDetectionCleaner(const std::vector<int> SrcDeltaListX, const std::vector<int> SrcDeltaListY, Mat& dst, std::vector<int> DeltaListX, std::vector<int> DeltaListY){
+	double Length;
+//	cvtColor(dst, dst, COLOR_GRAY2RGB);
+	std::cout << "liczba minucji: " << SrcDeltaListX.size() << std::endl;
+	std::vector<int> ListX = SrcDeltaListX;
+	std::vector<int> ListY = SrcDeltaListY;
+	std::vector<int> IndexI;
+	std::vector<int> IndexJ;
 
+	int licznik = 0;
+	for (int i = 0; i < SrcDeltaListX.size(); i++)
+	{
+		for (int j = 1; j < SrcDeltaListX.size(); j++)
+		{
+			if (!(i == j))
+			{
+
+
+				Length = sqrt((SrcDeltaListX[i] - SrcDeltaListX[j])*(SrcDeltaListX[i] - SrcDeltaListX[j]) + (SrcDeltaListY[i] - SrcDeltaListY[j]) * (SrcDeltaListY[i] - SrcDeltaListY[j])); //Wzor na dlugosc wektora
+				//std::cout << "Dlugosc wektora: " << Length << std::endl;
+				//circle(dst, Point(SrcEndListX[i], SrcEndListY[i]), 5, Scalar(255, 0, 255), 1, 8, 0);
+				//circle(dst, Point(SrcEndListX[j], SrcEndListY[j]), 5, Scalar(0, 0, 255), 1, 8, 0);
+				if (Length < 15)
+				{
+					IndexI.push_back(i);	//zapisanie indeksow falszywych minucji
+					IndexJ.push_back(j);
+					j = SrcDeltaListX.size();
+				}
+			}
+		}
+	}
+	std::cout << "ilosc falszywych minucji: " << IndexI.size() + IndexJ.size() << std::endl;
+	std::cout << "licznik: " << 2 * licznik << std::endl;
+	for (int i = 0; i < SrcDeltaListX.size(); i++)
+	{
+		for (int j = 0; j < IndexI.size(); j++)
+		{
+			if ((std::binary_search(IndexI.begin(), IndexI.end(), i) == false) && (std::binary_search(IndexJ.begin(), IndexJ.end(), i) == false))
+			{
+				DeltaListX.push_back(SrcDeltaListX[i]);
+				DeltaListY.push_back(SrcDeltaListY[i]);
+			}
+		}
+
+	}
+	for (int i = 0; i < DeltaListX.size(); i++){
+		circle(dst, Point(DeltaListX[i], DeltaListY[i]), 5, Scalar(0, 0, 255), 1, 8, 0);
+	}
 }
 void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, Mat& dst, std::vector<int> EndListX, std::vector<int> EndListY, std::vector<std::string> SrcDirection, std::vector<std::string> Direction){
 	double Length;
@@ -54,7 +100,7 @@ void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, c
 			if (!(i == j))
 			{
 				Length = sqrt((SrcEndListX[i] - SrcEndListX[j])*(SrcEndListX[i] - SrcEndListX[j]) + (SrcEndListY[i] - SrcEndListY[j]) * (SrcEndListY[i] - SrcEndListY[j])); //Wzor na dlugosc wektora
-			if (Length < 40)
+			if (Length < 30)
 			{
 				if ((SrcDirection[i] == "N") && (SrcDirection[j] == "S" || SrcDirection[j] == "SE" || SrcDirection[j] == "SW")
 					)
