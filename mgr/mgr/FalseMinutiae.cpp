@@ -8,7 +8,7 @@ using namespace cv;
 // overloaded constructor
 FalseMinutiae::FalseMinutiae(){
 }
-void FalseMinutiae::DeltaDetectionCleaner(const std::vector<int> SrcDeltaListX, const std::vector<int> SrcDeltaListY, Mat& dst, std::vector<int> DeltaListX, std::vector<int> DeltaListY){
+void FalseMinutiae::DeltaDetectionCleaner(const std::vector<int> SrcDeltaListX, const std::vector<int> SrcDeltaListY, Mat& dst, std::vector<int>& DeltaListX, std::vector<int>& DeltaListY){
 	double Length;
 //	cvtColor(dst, dst, COLOR_GRAY2RGB);
 	std::cout << "liczba minucji: " << SrcDeltaListX.size() << std::endl;
@@ -54,10 +54,10 @@ void FalseMinutiae::DeltaDetectionCleaner(const std::vector<int> SrcDeltaListX, 
 
 	}
 	for (int i = 0; i < DeltaListX.size(); i++){
-		circle(dst, Point(DeltaListX[i], DeltaListY[i]), 5, Scalar(0, 0, 255), 1, 8, 0);
+		circle(dst, Point(DeltaListY[i], DeltaListX[i]), 5, Scalar(0, 0, 255), 1, 8, 0);
 	}
 }
-void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, Mat& dst, std::vector<int> EndListX, std::vector<int> EndListY, std::vector<std::string> SrcDirection, std::vector<std::string> Direction){
+void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, Mat& dst, std::vector<int>& EndListX, std::vector<int>& EndListY, std::vector<std::string> SrcDirection, std::vector<std::string> Direction){
 	double Length;
 	cvtColor(dst, dst, COLOR_GRAY2RGB);
 	std::cout << "liczba minucji: " << SrcEndListX.size() << std::endl;
@@ -178,8 +178,37 @@ void FalseMinutiae::EndingDetectionCleaner(const std::vector<int> SrcEndListX, c
 
 	}
 	for (int i = 0; i < EndListX.size(); i++){
-		circle(dst, Point(EndListX[i], EndListY[i]), 5, Scalar(255, 0, 255), 1, 8, 0);
+		circle(dst, Point(EndListY[i], EndListX[i]), 5, Scalar(255, 0, 255), 1, 8, 0);
 	}
 }
+void FalseMinutiae::FrameMark(int x0, int y0, int x1, int y1, const std::vector<int> SrcEndListX, const std::vector<int> SrcEndListY, std::vector<int> OutEndListX, std::vector<int> OutEndListY, const std::vector<int> SrcDeltaListX, const std::vector<int> SrcDeltaListY, std::vector<int> OutDeltaListX, std::vector<int> OutDeltaListY, Mat& dst){
+	std::vector<int> IndexEndList;
+	std::vector<int> IndexDeltaList;
+	cvtColor(dst, dst, COLOR_GRAY2RGB);
+	std::cout << "SrcEndListSize: " << SrcEndListX.size();
+	for (int i = 0; i < SrcEndListX.size(); i++)
+	{
+		//std::cout << "SrcEndList: " << SrcEndListX[i];
+		//std::cout << ", " << SrcEndListY[i] << std::endl;
+		if ((SrcEndListY[i] >= x0) && (SrcEndListY[i] <= x1) && (SrcEndListX[i] >= y0) && (SrcEndListX[i] <= y1)){
+			OutEndListX.push_back(SrcEndListX[i]);
+			OutEndListY.push_back(SrcEndListY[i]);
+		}
+	}
+	for (int i = 0; i < SrcDeltaListX.size(); i++)
+	{
+		if ((SrcDeltaListY[i] >= x0) && (SrcDeltaListY[i] <= x1) && (SrcDeltaListX[i] >= y0) && (SrcDeltaListX[i] <= y1)){
+			OutDeltaListX.push_back(SrcDeltaListX[i]);
+			OutDeltaListY.push_back(SrcDeltaListY[i]);
+		}
+	}
+	for (int i = 0; i < OutEndListX.size(); i++){
+		circle(dst, Point(OutEndListY[i], OutEndListX[i]), 5, Scalar(255, 0, 255), 1, 8, 0);
+	}
+	for (int i = 0; i < OutDeltaListX.size(); i++){
+		circle(dst, Point(OutDeltaListY[i], OutDeltaListX[i]), 5, Scalar(0, 0, 255), 1, 8, 0);
+	}
+}
+
 FalseMinutiae::~FalseMinutiae(){
 }

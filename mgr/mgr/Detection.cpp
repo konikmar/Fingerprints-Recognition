@@ -162,8 +162,8 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &Delta
 					if ((pomoc == 0) && (kontur>=3))
 				{
 					circle(dst, Point(j, i), 5, Scalar(0, 0, 255), 1, 8, 0);
-					DeltaListX.push_back(j);
-					DeltaListY.push_back(i);
+					DeltaListX.push_back(i);
+					DeltaListY.push_back(j);
 					std::cout << "wykryto delte: pkt: " << i << " ," << j << std::endl;
 				}
 			}
@@ -322,8 +322,8 @@ void Detection::EndingDetection(const Mat& src, Mat& dst, std::vector<int> &EndL
 						line(dst, Point(j, i), Point(j - 3, i - 3), Scalar(0, 255, 0));
 					}
 					circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
-					EndListX.push_back(j);
-					EndListY.push_back(i);
+					EndListX.push_back(i);
+					EndListY.push_back(j);
 					Direction.push_back(kierunek);
 				}
 

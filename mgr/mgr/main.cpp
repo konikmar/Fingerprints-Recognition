@@ -195,15 +195,21 @@ int main(int, char)
 	//FALSE MINUTIAE CLEANER/////////////////////////
 	FalseMinutiae FalseMinutiaeObject;
 	Mat Minutiae;
+	Mat CleanMinutiae;
 	Minutiae = image_thinning.clone();
+	CleanMinutiae = Minutiae.clone();
 	std::vector<int> OutEndListX;
 	std::vector<int> OutEndListY;
 	std::vector<int> OutDeltaListX;
 	std::vector<int> OutDeltaListY;
+	std::vector<int> CleanEndListX;
+	std::vector<int> CleanEndListY;
+	std::vector<int> CleanDeltaListX;
+	std::vector<int> CleanDeltaListY;
 	std::vector<string> OutDirection_Ending;
 	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY, Direction_Ending, OutDirection_Ending);
 	FalseMinutiaeObject.DeltaDetectionCleaner(DeltaListX, DeltaListY, Minutiae, OutDeltaListX, OutDeltaListY);
-	
+	FalseMinutiaeObject.FrameMark(195, 50, 470, 500, OutEndListX, OutEndListY, CleanEndListX, CleanEndListY, OutDeltaListX, OutDeltaListY, CleanDeltaListX, CleanDeltaListY, CleanMinutiae);
 	/////////////////////////////////////////////////////////////////////////
 
 	int a;
