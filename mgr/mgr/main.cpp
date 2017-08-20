@@ -156,9 +156,9 @@ int main(int, char)
 	threshold(image_thinning, image_thinning, 10, 255, CV_THRESH_BINARY);
 	Mat image_thinning_negative = image_thinning.clone();
 
-	ThinningObject.Thinning1(image_thinning, image_thinning);
-	ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
-	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
+	//ThinningObject.Thinning1(image_thinning, image_thinning);
+	//ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
+	ThinningObject.ZhangSuenThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
 	//ThinningObject.GuoHallThinning(image_thinning, image_thinning); //spostrzezenia przy funkcji w thinning.cpp
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
