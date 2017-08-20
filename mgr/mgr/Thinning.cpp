@@ -128,47 +128,46 @@ Thinning::~Thinning(){
 }
 
 void Thinning::ZhangSuenThinning(const Mat& src, Mat& dst) // na podstawie: https://rosettacode.org/wiki/Zhang-Suen_thinning_algorithm
-															// tak jak mowilem, dziala troche dziwnie, duzo z tym kombinowalem ale jeszcze nie zdiagnozowalem dlaczego nie dziala tak samo jak ten z internetu (moze to byc jakas prosta rzecz, ktorej nie widze)
+// tak jak mowilem, dziala troche dziwnie, duzo z tym kombinowalem ale jeszcze nie zdiagnozowalem dlaczego nie dziala tak samo jak ten z internetu (moze to byc jakas prosta rzecz, ktorej nie widze)
 {
 	dst = src.clone();
 	Negative(dst);
 	dst /= 255;
 	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
 	int m1, m2;
-	int A=0; // number of transitions from 255 to 0 in the sequence P2,P3,P4,P5,P6,P7,P8,P9,P2
-	int B=0; // number of black pixel neighbours of P1
+	int A = 0; // number of transitions from 255 to 0 in the sequence P2,P3,P4,P5,P6,P7,P8,P9,P2
+	int B = 0; // number of black pixel neighbours of P1
 	bool change = true;
 	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
 	cv::Mat diff;
 	cv::Mat marker = cv::Mat::zeros(dst.size(), CV_8UC1);
 	uchar *pDst;
-
-	do
+	int d = 1;
+	while (cv::countNonZero(diff) > 0 || d==1)
 	{
-
 		change = false;
 
 		// STEP 1
-		for (int i = 1; i < src.rows - 1; ++i)
+		for (int i = 1; i < dst.rows - 1; ++i)
 		{
 			pDst = marker.ptr<uchar>(i);
 
-			for (int j = 1; j < src.cols - 1; ++j)
+			for (int j = 1; j < dst.cols - 1; ++j)
 			{
 
-				P1 = src.at<uchar>(i, j);
+				P1 = dst.at<uchar>(i, j);
 
-				if (P1 == 1)
-				{
+				///if (P1 == 1)
+				///{
 
-					P2 = src.at<uchar>(i - 1, j);
-					P3 = src.at<uchar>(i - 1, j + 1);
-					P4 = src.at<uchar>(i, j + 1);
-					P5 = src.at<uchar>(i + 1, j + 1);
-					P6 = src.at<uchar>(i + 1, j);
-					P7 = src.at<uchar>(i + 1, j - 1);
-					P8 = src.at<uchar>(i, j - 1);
-					P9 = src.at<uchar>(i - 1, j - 1);
+					P2 = dst.at<uchar>(i - 1, j);
+					P3 = dst.at<uchar>(i - 1, j + 1);
+					P4 = dst.at<uchar>(i, j + 1);
+					P5 = dst.at<uchar>(i + 1, j + 1);
+					P6 = dst.at<uchar>(i + 1, j);
+					P7 = dst.at<uchar>(i + 1, j - 1);
+					P8 = dst.at<uchar>(i, j - 1);
+					P9 = dst.at<uchar>(i - 1, j - 1);
 				
 
 					////count A
@@ -209,31 +208,32 @@ void Thinning::ZhangSuenThinning(const Mat& src, Mat& dst) // na podstawie: http
 
 					A = 0;
 					B = 0;
-				}
+				///}
 
 			}
 		}
+		dst &= ~marker;
 
 		// STEP 2
-		for (int i = 1; i < src.rows - 1; ++i)
+		for (int i = 1; i < dst.rows - 1; ++i)
 		{
 			pDst = marker.ptr<uchar>(i);
-			for (int j = 1; j < src.cols - 1; ++j)
+			for (int j = 1; j < dst.cols - 1; ++j)
 			{
 
-				P1 = src.at<uchar>(i, j);
+				P1 = dst.at<uchar>(i, j);
 
-				if (P1 == 1)
-				{
+				///if (P1 == 1)
+				///{
 
-					P2 = src.at<uchar>(i - 1, j);
-					P3 = src.at<uchar>(i - 1, j + 1);
-					P4 = src.at<uchar>(i, j + 1);
-					P5 = src.at<uchar>(i + 1, j + 1);
-					P6 = src.at<uchar>(i + 1, j);
-					P7 = src.at<uchar>(i + 1, j - 1);
-					P8 = src.at<uchar>(i, j - 1);
-					P9 = src.at<uchar>(i - 1, j - 1);
+					P2 = dst.at<uchar>(i - 1, j);
+					P3 = dst.at<uchar>(i - 1, j + 1);
+					P4 = dst.at<uchar>(i, j + 1);
+					P5 = dst.at<uchar>(i + 1, j + 1);
+					P6 = dst.at<uchar>(i + 1, j);
+					P7 = dst.at<uchar>(i + 1, j - 1);
+					P8 = dst.at<uchar>(i, j - 1);
+					P9 = dst.at<uchar>(i - 1, j - 1);
 
 
 					////count A
@@ -274,16 +274,20 @@ void Thinning::ZhangSuenThinning(const Mat& src, Mat& dst) // na podstawie: http
 
 					A = 0;
 					B = 0;
-				}
+				///}
 
 			}
 		}
 		dst &= ~marker;
 
 		cv::absdiff(dst, prev, diff);
+		if (cv::countNonZero(diff) == 0)
+		{
+			d = 0;
+		}
 		dst.copyTo(prev);
 
-	} while (cv::countNonZero(diff) > 0);
+	} 
 
 	dst *= 255;
 	
