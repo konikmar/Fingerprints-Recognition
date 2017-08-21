@@ -31,6 +31,13 @@ public:
 	// Guo-Hall
 	void GuoHallThinning(const Mat& src, Mat& dst);
 
+	// Lu and Wang
+	void LuWangThinning(const Mat& src, Mat& dst);
+
+	// PRZYDATNE
+	// http://shodhganga.inflibnet.ac.in/bitstream/10603/3466/10/10_chapter%202.pdf
+	// https://www.ancient-asia-journal.com/articles/10.5334/aa.06114/print/
+
 private:
 	Mat fingerprint;
 };

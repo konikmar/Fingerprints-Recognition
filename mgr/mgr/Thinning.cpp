@@ -373,3 +373,119 @@ void Thinning::GuoHallThinning(const Mat& src, Mat& dst)
 	dst *= 255;
 }
 
+void Thinning::LuWangThinning(const Mat& src, Mat& dst)
+{
+	dst = src.clone();
+	Negative(dst);
+	dst /= 255;
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	int m1, m2;
+	int A = 0; // number of transitions from 255 to 0 in the sequence P2,P3,P4,P5,P6,P7,P8,P9,P2
+	int B = 0; // number of black pixel neighbours of P1
+	bool change = true;
+	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
+	cv::Mat diff;
+	cv::Mat marker = cv::Mat::zeros(dst.size(), CV_8UC1);
+	uchar *pDst;
+	int d = 1;
+	while (cv::countNonZero(diff) > 0 || d == 1)
+	{
+		change = false;
+
+		// STEP 1
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+				A = (P2 == 0 && P3 == 1) + (P3 == 0 && P4 == 1) +
+					(P4 == 0 && P5 == 1) + (P5 == 0 && P6 == 1) +
+					(P6 == 0 && P7 == 1) + (P7 == 0 && P8 == 1) +
+					(P8 == 0 && P9 == 1) + (P9 == 0 && P2 == 1);
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				m1 = (P2 * P4 * P6);
+				m2 = (P4 * P6 * P8);
+
+				if (A == 1 && (B >= 3 && B <= 6) && m1 == 0 && m2 == 0)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				A = 0;
+				B = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		// STEP 2
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+
+				A = (P2 == 0 && P3 == 1) + (P3 == 0 && P4 == 1) +
+					(P4 == 0 && P5 == 1) + (P5 == 0 && P6 == 1) +
+					(P6 == 0 && P7 == 1) + (P7 == 0 && P8 == 1) +
+					(P8 == 0 && P9 == 1) + (P9 == 0 && P2 == 1);
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				m1 = (P2 * P4 * P8);
+				m2 = (P2 * P6 * P8);
+
+				if (A == 1 && (B >= 3 && B <= 6) && m1 == 0 && m2 == 0)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				A = 0;
+				B = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		cv::absdiff(dst, prev, diff);
+		if (cv::countNonZero(diff) == 0)
+		{
+			d = 0;
+		}
+		dst.copyTo(prev);
+
+	}
+
+	dst *= 255;
+
+}
+
