@@ -34,9 +34,32 @@ public:
 	// Lu and Wang
 	void LuWangThinning(const Mat& src, Mat& dst);
 
+	// Enhanced Parallel Thinning Algorithm (KWK)
+	void KwonWoongKangThinning(const Mat& src, Mat& dst);
+
+	// Modified Thinning Algorithm (Zhang Wang)
+	void ZhangWangThinning(const Mat& src, Mat& dst);
+
+	// Hilditch Thinning Algorithmn (presented by Naccache and Shinghal)
+	void HilditchThinning(const Mat& src, Mat& dst);
+
+	// Arabic Parallel Thinning Algorithm
+	void ArabicParallelThinning(const Mat& src, Mat& dst);
+
+	// Efficient Parallel Thinning Algorithm (Aparajeya and Sanyal)
+	void EfficientParallelThinning(const Mat& src, Mat& dst);
+
 	// PRZYDATNE
 	// http://shodhganga.inflibnet.ac.in/bitstream/10603/3466/10/10_chapter%202.pdf
 	// https://www.ancient-asia-journal.com/articles/10.5334/aa.06114/print/
+	//https://www.researchgate.net/publication/316476002_Comparison_of_thinning_algorithms_for_vectorization_of_engineering_drawings
+	//https://www.ancient-asia-journal.com/articles/10.5334/aa.06114/print/
+	//http://shodhganga.inflibnet.ac.in/bitstream/10603/3466/10/10_chapter%202.pdf
+	//https://link.springer.com/article/10.1007/s11801-008-7108-5
+	//https://www.idc-online.com/technical_references/pdfs/information_technology/Enhanced%20Thinning.pdf
+	//http://www.jatit.org/volumes/Vol94No2/2Vol94No2.pdf
+	//http://www.ijsrp.org/research-paper-0616/ijsrp-p5425.pdf
+	//http://www.arpnjournals.com/jeas/research_papers/rp_2010/jeas_0410_326.pdf
 
 private:
 	Mat fingerprint;

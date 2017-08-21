@@ -160,7 +160,13 @@ int main(int, char)
 	//ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
 	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning);
 	//ThinningObject.GuoHallThinning(image_thinning, image_thinning);
-	ThinningObject.LuWangThinning(image_thinning, image_thinning);
+	//ThinningObject.LuWangThinning(image_thinning, image_thinning);
+	//ThinningObject.KwonWoongKangThinning(image_thinning, image_thinning); // DO SPRAWDZENIA PASS2
+	//ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
+	//ThinningObject.HilditchThinning(image_thinning, image_thinning);
+	//ThinningObject.ArabicParallelThinning(image_thinning, image_thinning);
+	ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
+	
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
 
