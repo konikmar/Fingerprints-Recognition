@@ -49,6 +49,9 @@ public:
 	// Efficient Parallel Thinning Algorithm (Aparajeya and Sanyal)
 	void EfficientParallelThinning(const Mat& src, Mat& dst);
 
+	// Stentiford Thinning Algorithm (Stentiford & Murtimer)
+	void StentifordThinning(const Mat& src, Mat& dst);
+
 	// Improved Arabic Parallel Thinning Algorithm (Proposed method - should provide 8-connectivity only / delete unnecessary pixels)
 	// ZAPROPONOWA£EM SWOJ¥ W£ASN¥ METODÊ - POSZERZENIE ARABIC PARALLEL O PASS2 - ZOBACZYMY MO¯E SIÊ PRZYDA, JAK TAK TO SPOKO, JAK NIE TO TRUDNO :D
 	// MOIM ZDANIEM MO¯E SIÊ PRZYDAC, BO NP. NIE WYKRYWA TERAZ ROZWIDLEÑ TAM GDZIE ICH NIE MA

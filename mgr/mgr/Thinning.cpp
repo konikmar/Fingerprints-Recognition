@@ -1341,3 +1341,194 @@ void Thinning::ImprovedArabicParallelThinning(const Mat& src, Mat& dst)
 	dst *= 255;
 
 }
+
+void Thinning::StentifordThinning(const Mat& src, Mat& dst)
+{
+	dst = src.clone();
+	Negative(dst);
+	dst /= 255;
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	int m1, m2;
+	int B = 0; // number of black pixel neighbours of P1
+	int C = 0; //
+	bool change = true;
+	cv::Mat prev = cv::Mat::zeros(dst.size(), CV_8UC1);
+	cv::Mat diff;
+	cv::Mat marker = cv::Mat::zeros(dst.size(), CV_8UC1);
+	uchar *pDst;
+	int d = 1;
+	while (cv::countNonZero(diff) > 0 || d == 1)
+	{
+		change = false;
+
+		// STEP 1
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				//C = !P2 && (P3 || P4) + !P4 && (P5 || P6) + !P6 && (P7 || P8) + !P8 && (P9 || P2);
+
+				int C = int(~P2 & (P3 | P4)) +
+					int(~P4 & (P5 | P6)) +
+					int(~P6 & (P7 | P8)) +
+					int(~P8 & (P9 | P2));
+
+				if ((B > 1) && (C==1) && P1==1 && P2==0 && P6==1)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				B = 0;
+				C = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		// STEP 2
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				//C = !P2 && (P3 || P4) + !P4 && (P5 || P6) + !P6 && (P7 || P8) + !P8 && (P9 || P2);
+				int C = int(~P2 & (P3 | P4)) +
+					int(~P4 & (P5 | P6)) +
+					int(~P6 & (P7 | P8)) +
+					int(~P8 & (P9 | P2));
+
+				if ((B > 1) && (C == 1) && P1 == 1 && P8 == 0 && P4 == 1)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				B = 0;
+				C = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		// STEP 3
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				//C = !P2 && (P3 || P4) + !P4 && (P5 || P6) + !P6 && (P7 || P8) + !P8 && (P9 || P2);
+				int C = int(~P2 & (P3 | P4)) +
+					int(~P4 & (P5 | P6)) +
+					int(~P6 & (P7 | P8)) +
+					int(~P8 & (P9 | P2));
+
+				if ((B > 1) && (C == 1) && P1 == 1 && P6 == 0 && P2 == 1)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				B = 0;
+				C = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		// STEP 4
+		for (int i = 1; i < dst.rows - 1; ++i)
+		{
+			pDst = marker.ptr<uchar>(i);
+			for (int j = 1; j < dst.cols - 1; ++j)
+			{
+
+				P1 = dst.at<uchar>(i, j);
+				P2 = dst.at<uchar>(i - 1, j);
+				P3 = dst.at<uchar>(i - 1, j + 1);
+				P4 = dst.at<uchar>(i, j + 1);
+				P5 = dst.at<uchar>(i + 1, j + 1);
+				P6 = dst.at<uchar>(i + 1, j);
+				P7 = dst.at<uchar>(i + 1, j - 1);
+				P8 = dst.at<uchar>(i, j - 1);
+				P9 = dst.at<uchar>(i - 1, j - 1);
+
+				B = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+
+				//C = !P2 && (P3 || P4) + !P4 && (P5 || P6) + !P6 && (P7 || P8) + !P8 && (P9 || P2);
+				int C = int(~P2 & (P3 | P4)) +
+					int(~P4 & (P5 | P6)) +
+					int(~P6 & (P7 | P8)) +
+					int(~P8 & (P9 | P2));
+
+				if ((B > 1) && (C == 1) && P1 == 1 && P4 == 0 && P8 == 1)
+				{
+					pDst[j] = 1;
+					change = true;
+				}
+
+				B = 0;
+				C = 0;
+				///}
+
+			}
+		}
+		dst &= ~marker;
+
+		cv::absdiff(dst, prev, diff);
+		if (cv::countNonZero(diff) == 0)
+		{
+			d = 0;
+		}
+		dst.copyTo(prev);
+
+	}
+
+	dst *= 255;
+
+}
