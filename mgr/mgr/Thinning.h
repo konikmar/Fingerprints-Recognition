@@ -49,6 +49,14 @@ public:
 	// Efficient Parallel Thinning Algorithm (Aparajeya and Sanyal)
 	void EfficientParallelThinning(const Mat& src, Mat& dst);
 
+	// Improved Arabic Parallel Thinning Algorithm (Proposed method - should provide 8-connectivity only / delete unnecessary pixels)
+	// ZAPROPONOWA£EM SWOJ¥ W£ASN¥ METODÊ - POSZERZENIE ARABIC PARALLEL O PASS2 - ZOBACZYMY MO¯E SIÊ PRZYDA, JAK TAK TO SPOKO, JAK NIE TO TRUDNO :D
+	// MOIM ZDANIEM MO¯E SIÊ PRZYDAC, BO NP. NIE WYKRYWA TERAZ ROZWIDLEÑ TAM GDZIE ICH NIE MA
+	// TU PORÓWNANIE (PO LEWEJ ZWYK£Y ARABIC, PO PRAWEJ NOWA):
+	// https://zapodaj.net/6f470ca119036.png.html
+	// https://zapodaj.net/ec10950b2a33c.png.html
+	void ImprovedArabicParallelThinning(const Mat& src, Mat& dst);
+
 	// PRZYDATNE
 	// http://shodhganga.inflibnet.ac.in/bitstream/10603/3466/10/10_chapter%202.pdf
 	// https://www.ancient-asia-journal.com/articles/10.5334/aa.06114/print/

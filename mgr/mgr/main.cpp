@@ -165,7 +165,8 @@ int main(int, char)
 	//ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
 	//ThinningObject.HilditchThinning(image_thinning, image_thinning);
 	//ThinningObject.ArabicParallelThinning(image_thinning, image_thinning);
-	ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
+	//ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
+	ThinningObject.ImprovedArabicParallelThinning(image_thinning, image_thinning);
 	
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
