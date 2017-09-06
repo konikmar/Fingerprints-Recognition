@@ -25,28 +25,28 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &Delta
 		{
 			if (src.at<uchar>(i, j) == 255)
 			{
-				if (src.at<uchar>(i - 1, j - 1) == 255){
+				if (src.at<uchar>(i - 1, j - 1) == 255 && src.at<uchar>(i, j - 1) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i - 1, j) == 255){
+				if (src.at<uchar>(i, j - 1) == 255 && src.at<uchar>(i + 1, j - 1) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i - 1, j + 1) == 255){
+				if (src.at<uchar>(i + 1, j - 1) == 255 && src.at<uchar>(i + 1, j) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i, j - 1) == 255){
+				if (src.at<uchar>(i + 1, j) == 255 && src.at<uchar>(i + 1, j + 1) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i, j + 1) == 255){
+				if (src.at<uchar>(i + 1, j + 1) == 255 && src.at<uchar>(i, j + 1) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i + 1, j - 1) == 255){
+				if (src.at<uchar>(i, j + 1) == 255 && src.at<uchar>(i - 1, j + 1) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i + 1, j) == 255){
+				if (src.at<uchar>(i - 1, j + 1) == 255 && src.at<uchar>(i - 1, j) == 0){
 					licznik++;
 				}
-				if (src.at<uchar>(i + 1, j + 1) == 255){
+				if (src.at<uchar>(i - 1, j) == 255 && src.at<uchar>(i - 1, j - 1) == 0){
 					licznik++;
 				}
 
