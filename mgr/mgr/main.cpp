@@ -18,8 +18,11 @@ using namespace std;
 int main(int, char)
 {
 	Mat image;
-	image = imread("Data/00111.bmp", 1);
+	image = imread("Data/012_4_3.bmp", 1);
 	//image = imread("Data/fingerprint.png", 1); // non-real, simple fingerprint
+	//image = imread("Data/ukos.jpg", 1);
+	Mat test;
+	test = imread("Data/ukos.jpg", 1);
 	Size size(6 * image.cols, 6 * image.rows);
 	resize(image, image, size);
 	//namedWindow("okno", 1);
@@ -161,13 +164,20 @@ int main(int, char)
 	//ThinningObject.ZhangSuenThinning(image_thinning, image_thinning);
 	//ThinningObject.GuoHallThinning(image_thinning, image_thinning);
 	//ThinningObject.LuWangThinning(image_thinning, image_thinning);
+//	cvtColor(test, test, CV_BGR2GRAY);
+//	threshold(test, test,50, 255, CV_THRESH_BINARY);
+	//ThinningObject.LuWangThinning(test, test);
 	//ThinningObject.KwonWoongKangThinning(image_thinning, image_thinning); // DO SPRAWDZENIA PASS2
-	//ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
+	ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
+	//ThinningObject.ZhangWangThinning(test, test);
+	//imwrite("Data/sign.bmp", test);
 	//ThinningObject.HilditchThinning(image_thinning, image_thinning);
+	//ThinningObject.HilditchThinning(test, test);
+	//imwrite("Data/test.bmp", test);
 	//ThinningObject.ArabicParallelThinning(image_thinning, image_thinning);
 	//ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
 	//ThinningObject.ImprovedArabicParallelThinning(image_thinning, image_thinning);
-	ThinningObject.StentifordThinning(image_thinning, image_thinning);
+	//ThinningObject.StentifordThinning(image_thinning, image_thinning);
 	
 	imwrite("Data/Thinning.bmp", image_thinning);
 	///////////////////////////////////////////////////////////////////////////
