@@ -18,39 +18,69 @@ using namespace std;
 int main(int, char)
 {
 	Mat image;
-	image = imread("Data/012_4_3.bmp", 1);
+	image = imread("Data/013_4_2.bmp", 1);
 	//image = imread("Data/fingerprint.png", 1); // non-real, simple fingerprint
 	//image = imread("Data/ukos.jpg", 1);
 	Mat test;
 	test = imread("Data/ukos.jpg", 1);
-	Size size(6 * image.cols, 6 * image.rows);
+	Size size(3 * image.cols, 3 * image.rows); //wczesniej bylo 6
 	resize(image, image, size);
 	//namedWindow("okno", 1);
 	//imshow("okno", image);
 
-	//PREPROCESSING
+	cvtColor(image, image, CV_BGR2GRAY);
+
+	///////////////////////////////////////////////////////////////
+	
+	////PREPROCESSING
+	//Preprocessing PreprocesingObject;
+	
+	////THRESHOLD
+	//Mat image_threshold = image.clone();
+	//PreprocesingObject.Threshold(image_threshold);
+
+	////MEDIAN FILTER
+	//Mat image_median = image_threshold.clone();
+	//PreprocesingObject.Filter(image_median);
+	//PreprocesingObject.Filter(image_median);
+	//PreprocesingObject.Filter(image_median);
+	//PreprocesingObject.Filter(image_median);
+
+	////DILATE	
+	//Mat image_dilate = image_median.clone();
+	//PreprocesingObject.Dilate(image_dilate);
+
+	//////////////////////////////////////////////////////////////
+
+	////PREPROCESSING 2 na razie robiony za pomoc¹ prostych operacji, metod¹ prób i b³êdów, na tych nowych fotach s¹ mocne pory, co przeszkadza i ciê¿ko je w 100% wyeliminowaæ bez popsucia odcisku :( 
 	Preprocessing PreprocesingObject;
 
-	//THRESHOLD
-	Mat image_threshold = image.clone();
-	PreprocesingObject.Threshold(image_threshold);
+	//WINDOWING
+	Mat image_windowing = image.clone();
+	PreprocesingObject.Windowing(image_windowing);
 
 	//MEDIAN FILTER
-	Mat image_median = image_threshold.clone();
-	PreprocesingObject.Filter(image_median);
+	Mat image_median = image_windowing.clone();
 	PreprocesingObject.Filter(image_median);
 	PreprocesingObject.Filter(image_median);
 	PreprocesingObject.Filter(image_median);
 
-	//DILATE	
-	Mat image_dilate = image_median.clone();
-	PreprocesingObject.Dilate(image_dilate);
+	////THRESHOLD
+	Mat image_threshold = image_median.clone();
+	adaptiveThreshold(image_threshold, image_threshold, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 75, 1);
+
+	////DILATE	
+	Mat image_dilate = image_threshold.clone();
+	//PreprocesingObject.Erode(image_dilate);
+	//PreprocesingObject.Dilate(image_dilate);
+
+	//////////////////////////////////////////////////////////////
 	
-
-	Size size1( image_dilate.cols/3,  image_dilate.rows/3);
+	Size size1( image_dilate.cols/2,  image_dilate.rows/2); //bylo /3
 	resize(image_dilate, image_dilate, size1);
 	PreprocesingObject.Threshold(image_dilate);
 	imwrite("Data/00111_a.bmp", image_dilate);	//save image after preprocessing
+
 	//////////////////////////////////////////////////////////////
 
 	//GABOR FILTER
@@ -168,7 +198,7 @@ int main(int, char)
 //	threshold(test, test,50, 255, CV_THRESH_BINARY);
 	//ThinningObject.LuWangThinning(test, test);
 	//ThinningObject.KwonWoongKangThinning(image_thinning, image_thinning); // DO SPRAWDZENIA PASS2
-	ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
+	//ThinningObject.ZhangWangThinning(image_thinning, image_thinning);
 	//ThinningObject.ZhangWangThinning(test, test);
 	//imwrite("Data/sign.bmp", test);
 	//ThinningObject.HilditchThinning(image_thinning, image_thinning);
@@ -176,7 +206,7 @@ int main(int, char)
 	//imwrite("Data/test.bmp", test);
 	//ThinningObject.ArabicParallelThinning(image_thinning, image_thinning);
 	//ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
-	//ThinningObject.ImprovedArabicParallelThinning(image_thinning, image_thinning);
+	ThinningObject.ImprovedArabicParallelThinning(image_thinning, image_thinning);
 	//ThinningObject.StentifordThinning(image_thinning, image_thinning);
 	
 	imwrite("Data/Thinning.bmp", image_thinning);

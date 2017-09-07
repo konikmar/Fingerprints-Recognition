@@ -7,6 +7,9 @@ using namespace cv;
 class Preprocessing{
 public:
 
+	// Windowing
+	void Windowing(Mat& image);
+
 	// Filtration
 	void Filter(Mat& image);
 
@@ -15,6 +18,9 @@ public:
 
 	// Dilate
 	void Dilate(Mat& image);
+
+	// Erode
+	void Erode(Mat& image);
 
 	// Normalize
 	void Normalize(Mat& image);

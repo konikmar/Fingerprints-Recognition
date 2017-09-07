@@ -1,53 +1,10 @@
-<<<<<<< HEAD
-﻿Build started 06.09.2017 18:36:14.
-     1>Project "C:\Users\Marek\Documents\GitHub\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\Ceemple\OpenCV4VS\include /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt main.cpp
-         main.cpp
-=======
-﻿Build started 24.08.2017 15:23:55.
+﻿Build started 07.09.2017 14:13:35.
      1>Project "D:\FINGERPRINTY\Fingerprints-Recognition\mgr\mgr\mgr.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\Ceemple\OpenCV4VS\include /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Detection.cpp FalseMinutiae.cpp FingerprintsRecognition.cpp GaborFilter.cpp Preprocessing.cpp Thinning.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\Ceemple\OpenCV4VS\include /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Preprocessing.cpp main.cpp
          main.cpp
-         Thinning.cpp
-     1>Thinning.cpp(252): warning C4101: 'M' : unreferenced local variable
-     1>Thinning.cpp(1351): warning C4101: 'm1' : unreferenced local variable
-     1>Thinning.cpp(1351): warning C4101: 'm2' : unreferenced local variable
          Preprocessing.cpp
-         GaborFilter.cpp
-     1>GaborFilter.cpp(34): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(34): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>GaborFilter.cpp(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(99): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
-     1>GaborFilter.cpp(103): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
-     1>GaborFilter.cpp(117): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(262): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(263): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(267): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>GaborFilter.cpp(346): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(402): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>GaborFilter.cpp(454): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-         FingerprintsRecognition.cpp
-         FalseMinutiae.cpp
-     1>FalseMinutiae.cpp(37): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-     1>FalseMinutiae.cpp(91): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-     1>FalseMinutiae.cpp(138): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-     1>FalseMinutiae.cpp(144): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-     1>FalseMinutiae.cpp(150): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-     1>FalseMinutiae.cpp(156): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-         Detection.cpp
-     1>Detection.cpp(164): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 Detection.cpp(152) : definition of 'i' ignored
-                 Detection.cpp(22) : definition of 'i' used
-     1>Detection.cpp(165): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 Detection.cpp(152) : definition of 'i' ignored
-                 Detection.cpp(22) : definition of 'i' used
-     1>Detection.cpp(167): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 Detection.cpp(152) : definition of 'i' ignored
-                 Detection.cpp(22) : definition of 'i' used
          Generating Code...
->>>>>>> origin/master
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\FINGERPRINTY\Fingerprints-Recognition\mgr\x64\Debug\mgr.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Ceemple\OpenCV4VS\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib StatTimer.lib clBLAS.lib clFFT.lib opencv_calib3d300d.lib opencv_core300d.lib opencv_cuda300d.lib opencv_cudaarithm300d.lib opencv_cudabgsegm300d.lib opencv_cudacodec300d.lib opencv_cudafeatures2d300d.lib opencv_cudafilters300d.lib opencv_cudaimgproc300d.lib opencv_cudalegacy300d.lib opencv_cudaoptflow300d.lib opencv_cudastereo300d.lib opencv_cudawarping300d.lib opencv_cudev300d.lib opencv_features2d300d.lib opencv_flann300d.lib opencv_highgui300d.lib opencv_imgcodecs300d.lib opencv_imgproc300d.lib opencv_ml300d.lib opencv_objdetect300d.lib opencv_photo300d.lib opencv_shape300d.lib opencv_stitching300d.lib opencv_superres300d.lib opencv_ts300d.lib opencv_video300d.lib opencv_videoio300d.lib opencv_videostab300d.lib opengl32.lib glu32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\FINGERPRINTY\Fingerprints-Recognition\mgr\x64\Debug\mgr.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\FINGERPRINTY\Fingerprints-Recognition\mgr\x64\Debug\mgr.lib" /MACHINE:X64 x64\Debug\Detection.obj
          x64\Debug\FalseMinutiae.obj
@@ -61,8 +18,4 @@
 
 Build succeeded.
 
-<<<<<<< HEAD
-Time Elapsed 00:00:03.70
-=======
-Time Elapsed 00:00:05.16
->>>>>>> origin/master
+Time Elapsed 00:00:01.79
