@@ -230,8 +230,11 @@ int main(int, char)
 	std::vector<string> Direction_Delta_Negative;
 	Detection = image_thinning.clone();
 	DetectionNegative = image_thinning_negative.clone();
-	DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
-	DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+	//DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	//DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+
+	DetectionObject.EndingDetectionCN(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	DetectionObject.DeltaDetectionCN(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
 	DetectionObject.EndingDetection(image_thinning_negative, DetectionNegative, EndListX_Negative, EndListY_Negative, Direction_Ending_Negative);
 	DetectionObject.DeltaDetection(image_thinning_negative, DetectionNegative, DeltaListX_Negative, DeltaListY_Negative, Direction_Delta_Negative);
 	imwrite("Data/MinutiaeDetection.bmp", Detection);

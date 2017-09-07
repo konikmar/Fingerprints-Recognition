@@ -1,11 +1,102 @@
 #include "Detection.h"
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include <cmath> 
 
 using namespace cv;
 
 // overloaded constructor
 Detection::Detection(){
+}
+void Detection::DeltaDetectionCN(const Mat& src, Mat& dst, std::vector<int> &DeltaListX, std::vector<int> &DeltaListY, std::vector<std::string> &Direction){
+	int cols = src.cols;
+	int rows = src.rows;
+	std::string kierunek;
+	std::vector<int> listaX;
+	std::vector<int> listaY;
+
+	float CN = 0;
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	src /= 255;
+	//cvtColor(dst, dst, COLOR_GRAY2RGB);
+	for (int i = 1; i < rows-1; i++)
+	{
+		for (int j = 1; j < cols-1; ++j)
+		{
+			if (src.at<uchar>(i, j) == 1)
+			{
+				P1 = src.at<uchar>(i, j);
+
+				P2 = src.at<uchar>(i - 1, j);
+				P3 = src.at<uchar>(i - 1, j + 1);
+				P4 = src.at<uchar>(i, j + 1);
+				P5 = src.at<uchar>(i + 1, j + 1);
+				P6 = src.at<uchar>(i + 1, j);
+				P7 = src.at<uchar>(i + 1, j - 1);
+				P8 = src.at<uchar>(i, j - 1);
+				P9 = src.at<uchar>(i - 1, j - 1);
+
+
+				CN = 0.5*(std::abs(P2 - P3) + std::abs(P3 - P4) + std::abs(P4 - P5) +
+					std::abs(P5 - P6) + std::abs(P6 - P7) + std::abs(P7 - P8) + std::abs(P8 - P9) + std::abs(P9 - P2));
+
+				if (CN == 3){
+					circle(dst, Point(j, i), 5, Scalar(0, 0, 255), 1, 8, 0);
+					DeltaListX.push_back(i);
+					DeltaListY.push_back(j);
+					std::cout << "wykryto delte: pkt: " << i << " ," << j << std::endl;
+				}
+
+			}
+		}
+	}
+	src *= 255;
+
+}
+void Detection::EndingDetectionCN(const Mat& src, Mat& dst, std::vector<int> &EndListX, std::vector<int> &EndListY, std::vector<std::string> &Direction){
+	int cols = src.cols;
+	int rows = src.rows;
+	std::string kierunek;
+	std::vector<int> listaX;
+	std::vector<int> listaY;
+
+	float CN = 0;
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	src /= 255;
+	cvtColor(dst, dst, COLOR_GRAY2RGB);
+	for (int i = 1; i < rows - 1; i++)
+	{
+		for (int j = 1; j < cols - 1; ++j)
+		{
+			if (src.at<uchar>(i, j) == 1)
+			{
+				P1 = src.at<uchar>(i, j);
+
+				P2 = src.at<uchar>(i - 1, j);
+				P3 = src.at<uchar>(i - 1, j + 1);
+				P4 = src.at<uchar>(i, j + 1);
+				P5 = src.at<uchar>(i + 1, j + 1);
+				P6 = src.at<uchar>(i + 1, j);
+				P7 = src.at<uchar>(i + 1, j - 1);
+				P8 = src.at<uchar>(i, j - 1);
+				P9 = src.at<uchar>(i - 1, j - 1);
+
+
+				CN = 0.5*(std::abs(P2 - P3) + std::abs(P3 - P4) + std::abs(P4 - P5) +
+					std::abs(P5 - P6) + std::abs(P6 - P7) + std::abs(P7 - P8) + std::abs(P8 - P9) + std::abs(P9 - P2));
+
+				if (CN == 1){
+					circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
+					EndListX.push_back(i);
+					EndListY.push_back(j);
+					std::cout << "wykryto zakonczenie: pkt: " << i << " ," << j << std::endl;
+				}
+
+			}
+		}
+	}
+	src *= 255;
+
 }
 void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &DeltaListX, std::vector<int> &DeltaListY, std::vector<std::string> &Direction){
 	int cols = src.cols;
@@ -161,7 +252,7 @@ void Detection::DeltaDetection(const Mat& src, Mat& dst, std::vector<int> &Delta
 					}
 					if ((pomoc == 0) && (kontur>=3))
 				{
-					circle(dst, Point(j, i), 5, Scalar(0, 0, 255), 1, 8, 0);
+					circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
 					DeltaListX.push_back(i);
 					DeltaListY.push_back(j);
 					std::cout << "wykryto delte: pkt: " << i << " ," << j << std::endl;
