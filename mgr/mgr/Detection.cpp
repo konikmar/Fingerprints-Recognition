@@ -8,6 +8,71 @@ using namespace cv;
 // overloaded constructor
 Detection::Detection(){
 }
+void Detection::DeltaDetection2(const Mat& src, Mat& dst, std::vector<int> &DeltaListX, std::vector<int> &DeltaListY, std::vector<std::string> &Direction){
+	int cols = src.cols;
+	int rows = src.rows;
+	std::string kierunek;
+	std::vector<int> listaX;
+	std::vector<int> listaY;
+
+	float CN = 0;
+	int P1, P2, P3, P4, P5, P6, P7, P8, P9;
+	int suma = 0;
+	int licznik = 0;
+	src /= 255;
+	//cvtColor(dst, dst, COLOR_GRAY2RGB);
+	for (int i = 1; i < rows - 1; i++)
+	{
+		for (int j = 1; j < cols - 1; ++j)
+		{
+			if (src.at<uchar>(i, j) == 1)
+			{
+				P1 = src.at<uchar>(i, j);
+
+				P2 = src.at<uchar>(i - 1, j);
+				P3 = src.at<uchar>(i - 1, j + 1);
+				P4 = src.at<uchar>(i, j + 1);
+				P5 = src.at<uchar>(i + 1, j + 1);
+				P6 = src.at<uchar>(i + 1, j);
+				P7 = src.at<uchar>(i + 1, j - 1);
+				P8 = src.at<uchar>(i, j - 1);
+				P9 = src.at<uchar>(i - 1, j - 1);
+
+				//suma = P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9;
+			//	if (suma >= 3){
+					if (P2 == 1 && P3 == 0)
+						++licznik;
+					if (P3 == 1 && P4 == 0)
+						++licznik;
+					if (P4 == 1 && P5 == 0)
+						++licznik;
+					if (P5 == 1 && P6 == 0)
+						++licznik;
+					if (P6 == 1 && P7 == 0)
+						++licznik;
+					if (P7 == 1 && P8 == 0)
+						++licznik;
+					if (P8 == 1 && P9 == 0)
+						++licznik;
+					if (P9 == 1 && P2 == 0)
+						++licznik;
+
+					if (licznik == 3){
+						circle(dst, Point(j, i), 5, Scalar(0, 0, 255), 1, 8, 0);
+						DeltaListX.push_back(i);
+						DeltaListY.push_back(j);
+						std::cout << "wykryto delte: pkt: " << i << " ," << j << std::endl;
+						licznik = 0;
+					}
+			//	}
+
+			}
+		}
+	}
+	src *= 255;
+}
+
+
 void Detection::DeltaDetectionCN(const Mat& src, Mat& dst, std::vector<int> &DeltaListX, std::vector<int> &DeltaListY, std::vector<std::string> &Direction){
 	int cols = src.cols;
 	int rows = src.rows;
@@ -412,7 +477,7 @@ void Detection::EndingDetection(const Mat& src, Mat& dst, std::vector<int> &EndL
 						kierunek = "NW";
 						line(dst, Point(j, i), Point(j - 3, i - 3), Scalar(0, 255, 0));
 					}
-					circle(dst, Point(j, i), 5, Scalar(255, 0, 255), 1, 8, 0);
+					circle(dst, Point(j, i), 5, Scalar(0, 0, 255), 1, 8, 0);
 					EndListX.push_back(i);
 					EndListY.push_back(j);
 					Direction.push_back(kierunek);

@@ -18,6 +18,9 @@ public:
 	// Ending Detecion
 	void EndingDetectionCN(const Mat& src, Mat& dst, std::vector<int> &EndListX, std::vector<int> &EndListY, std::vector<std::string> &Direction);
 
+
+	// Delta Detection
+	void DeltaDetection2(const Mat& src, Mat& dst, std::vector<int> &DeltaListX, std::vector<int> &DeltaListY, std::vector<std::string> &Direction);
 	// overloaded constructor
 	Detection();
 

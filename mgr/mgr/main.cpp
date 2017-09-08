@@ -17,12 +17,9 @@ using namespace std;
 
 int main(int, char)
 {
+	///odicks wzorcowy
 	Mat image;
 	image = imread("Data/013_4_2.bmp", 1);
-	//image = imread("Data/fingerprint.png", 1); // non-real, simple fingerprint
-	//image = imread("Data/ukos.jpg", 1);
-	Mat test;
-	test = imread("Data/ukos.jpg", 1);
 	Size size(3 * image.cols, 3 * image.rows); //wczesniej bylo 6
 	resize(image, image, size);
 	//namedWindow("okno", 1);
@@ -31,163 +28,85 @@ int main(int, char)
 	cvtColor(image, image, CV_BGR2GRAY);
 
 	///////////////////////////////////////////////////////////////
-	
+	//////////////////////////////////
+	//odcisk 1
+	Mat image1;
+	image1 = imread("Data/013_4_4.bmp", 1);
+	resize(image1, image1, size);
+	cvtColor(image1, image1, CV_BGR2GRAY);
+	/////////////////////////////////
 	////PREPROCESSING
-	//Preprocessing PreprocesingObject;
-	
-	////THRESHOLD
-	//Mat image_threshold = image.clone();
-	//PreprocesingObject.Threshold(image_threshold);
-
-	////MEDIAN FILTER
-	//Mat image_median = image_threshold.clone();
-	//PreprocesingObject.Filter(image_median);
-	//PreprocesingObject.Filter(image_median);
-	//PreprocesingObject.Filter(image_median);
-	//PreprocesingObject.Filter(image_median);
-
-	////DILATE	
-	//Mat image_dilate = image_median.clone();
-	//PreprocesingObject.Dilate(image_dilate);
-
-	//////////////////////////////////////////////////////////////
-
-	////PREPROCESSING 2 na razie robiony za pomoc¹ prostych operacji, metod¹ prób i b³êdów, na tych nowych fotach s¹ mocne pory, co przeszkadza i ciê¿ko je w 100% wyeliminowaæ bez popsucia odcisku :( 
 	Preprocessing PreprocesingObject;
-
-	//WINDOWING
+	//WINDOWING wzorcowy
 	Mat image_windowing = image.clone();
 	PreprocesingObject.Windowing(image_windowing);
 
-	//MEDIAN FILTER
+	//Windowing odiskc 1
+	Mat image_windowing1 = image1.clone();
+	PreprocesingObject.Windowing(image_windowing1);
+
+	//MEDIAN FILTER odcisk wzorcowy
 	Mat image_median = image_windowing.clone();
 	PreprocesingObject.Filter(image_median);
 	PreprocesingObject.Filter(image_median);
 	PreprocesingObject.Filter(image_median);
 
-	////THRESHOLD
+	//MEDIAN FILTER odcisk 1
+	Mat image_median1 = image_windowing1.clone();
+	PreprocesingObject.Filter(image_median1);
+	PreprocesingObject.Filter(image_median1);
+	PreprocesingObject.Filter(image_median1);
+
+	////THRESHOLD odcisk wzorcowy
 	Mat image_threshold = image_median.clone();
 	adaptiveThreshold(image_threshold, image_threshold, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 75, 1);
 
-	////DILATE	
-	Mat image_dilate = image_threshold.clone();
-	//PreprocesingObject.Erode(image_dilate);
-	//PreprocesingObject.Dilate(image_dilate);
+	//THRESHOLD odcisk 1
+	Mat image_threshold1 = image_median1.clone();
+	adaptiveThreshold(image_threshold1, image_threshold1, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 75, 1);
 
+	////DILATE odcisk wzorcowy
+	Mat image_dilate = image_threshold.clone();
+
+	///DILATE odcisk 1
+	Mat image_dilate1 = image_threshold1.clone();
 	//////////////////////////////////////////////////////////////
 	
+	//RESIZE odcisk wzorcowy
 	Size size1( image_dilate.cols/2,  image_dilate.rows/2); //bylo /3
 	resize(image_dilate, image_dilate, size1);
-	PreprocesingObject.Threshold(image_dilate);
-	imwrite("Data/00111_a.bmp", image_dilate);	//save image after preprocessing
+	
 
-	//////////////////////////////////////////////////////////////
+	//RESIZE odcisk 1
+	resize(image_dilate1, image_dilate1, size1);
 
-	//GABOR FILTER
-	//GaborFilter filter;
-
-	////string file_name;
-	////cout << "Podaj nazwe pliku (z rozszerzeniem): ";
-	////cin >> file_name;
-
-	////std::string imgDest = "./obrazy/";
-	////imgDest.append(file_name);
-
-	////Mat image = imread("obrazy/" + file_name, 0);
-	//
-	//Mat image_dilate2 = imread("Data/00111_a.bmp", 0);
-	//Size size2(0.2 * image_dilate2.cols, 0.2 * image_dilate2.rows);
-	//resize(image_dilate2, image_dilate2, size2);
-
-	//
-	////if (!image.data)                              // Check for invalid input
-	////{
-	////	cout << endl << "Brak pliku o podanej nazwie." << std::endl;
-	////	system("pause");
-	////	return -1;
-	////}
-
-	////cout << endl << "Obliczenia..." << std::endl;
-
-	//Mat image_color;
-	//Mat Gx, Gy;	///gradient images
-	//Mat orientation_map; /// matrix containing orientation of (group of) pixels
-	//Mat image_enhanced; /// image after enhancement
-	//Mat orientation_image; /// image with marked orientation of group of pixels
-	//Mat angle_matrix;	///angle matrix for method 3
-	//Mat magnitude_matrix; ///magnitude matrix for method 3
-
-	//cvtColor(image_dilate2, image_color, CV_GRAY2BGR);
-	//filter.gradientImage(image_dilate2, Gx, Gy);	///gradient computation
-
-	//switch (filter.method) ///choosing right computation of orientation method
-	//{
-	//case 1:
-	//{
-	//	filter.getOrientationMap(image_color, Gx, Gy, orientation_map, orientation_image);
-	//	break;
-	//}
-	//case 2:
-	//{
-	//	filter.getOrientationMap(image_color, Gx, Gy, orientation_map, orientation_image);
-	//	break;
-	//}
-	//case 3:
-	//{
-	//	phase(Gx, Gy, angle_matrix, false);
-	//	magnitude(Gx, Gy, magnitude_matrix);
-
-	//	cvtColor(image_dilate2, orientation_image, CV_GRAY2BGR);
-	//	normalize(magnitude_matrix, magnitude_matrix, 0, 1, NORM_MINMAX);
-	//	filter.getOrientationMapGradient(angle_matrix, magnitude_matrix, 31, orientation_map, orientation_image);
-	//	break;
-	//}
-	//default:
-	//{
-	//	cout << "Blad. Wybrano nieistniejaca metode tworzenia mapy orientacji. Sprawdz parametr 'method' obiektu klasy GaborFilter" << endl;
-	//	system("pause");
-	//	return 0;
-	//}
-	//}
-
-
-
-	//filter.enhanceImage(image_dilate2, image_enhanced, orientation_map, orientation_image);
-
-	//cout << endl << "SPACJA - zmiana widoku" << endl;
-	//cout << "ESC - koniec" << endl;
-	//int key = 0;
-	//while (1)	///displaying results
-	//{
-	//	imshow("Image before/after", image_dilate2);
-	//	key = waitKey(0);
-	//	if (key == 27) break;
-	//	imshow("Image before/after", orientation_image);
-	//	key = waitKey(0);
-	//	if (key == 27) break;
-	//	imshow("Image before/after", image_enhanced);
-	//	key = waitKey(0);
-	//	if (key == 27) break;
-	//}
 	/////////////////////////////////////////////////////
-	imwrite("Data/Preprocessing.bmp", image_dilate);
+	imwrite("Data/Program/Preprocessing.bmp", image_dilate); //save image after preprocessing - obraz wzorcowy
+	
+	imwrite("Data/Program/Preprocessing1.bmp", image_dilate1);	//save image after preprocessing - obraz 1
 
 	//THINNING
 	Thinning ThinningObject;
 	
-	Mat image_thinning = imread("Data/Preprocessing.bmp");
+	Mat image_thinning = imread("Data/Program/Preprocessing.bmp");
+	Mat image_thinning1 = imread("Data/Program/Preprocessing1.bmp");
 	//Mat image_thinning = imread("Data/00111_a.bmp");
 	//Size size3(0.2 * image_thinning.cols, 0.2 * image_thinning.rows);
 	//resize(image_thinning, image_thinning, size3);
 
 	if (!image_thinning.data)
 		return -1;
-
+	if (!image_thinning1.data)
+		return -1;
 	
 	
 	cvtColor(image_thinning, image_thinning, CV_BGR2GRAY);
 	threshold(image_thinning, image_thinning, 10, 255, CV_THRESH_BINARY);
 	Mat image_thinning_negative = image_thinning.clone();
+
+	cvtColor(image_thinning1, image_thinning1, CV_BGR2GRAY);
+	threshold(image_thinning1, image_thinning1, 10, 255, CV_THRESH_BINARY);
+	Mat image_thinning_negative1 = image_thinning1.clone();
 
 	//ThinningObject.Thinning1(image_thinning, image_thinning);
 	//ThinningObject.ThinningNegative1(image_thinning_negative, image_thinning_negative);
@@ -207,9 +126,11 @@ int main(int, char)
 	//ThinningObject.ArabicParallelThinning(image_thinning, image_thinning);
 	//ThinningObject.EfficientParallelThinning(image_thinning, image_thinning);  //Do sprawdzenia warunki
 	ThinningObject.ImprovedArabicParallelThinning(image_thinning, image_thinning);
+	ThinningObject.ImprovedArabicParallelThinning(image_thinning1, image_thinning1);
 	//ThinningObject.StentifordThinning(image_thinning, image_thinning);
 	
-	imwrite("Data/Thinning.bmp", image_thinning);
+	imwrite("Data/Program/Thinning.bmp", image_thinning);
+	imwrite("Data/Program/Thinning1.bmp", image_thinning1);
 	///////////////////////////////////////////////////////////////////////////
 
 	//DETECTION
@@ -230,21 +151,68 @@ int main(int, char)
 	std::vector<string> Direction_Delta_Negative;
 	Detection = image_thinning.clone();
 	DetectionNegative = image_thinning_negative.clone();
-	//DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
-	//DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+	DetectionObject.EndingDetection(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	DetectionObject.DeltaDetection(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
 
-	DetectionObject.EndingDetectionCN(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+
+	//detection image1
+	Mat Detection1;
+	Mat DetectionNegative1;
+	std::vector<int> DeltaListX1;
+	std::vector<int> DeltaListY1;
+	std::vector<int> DeltaListX_Negative1;
+	std::vector<int> DeltaListY_Negative1;
+	std::vector<int> EndListX1;
+	std::vector<int> EndListY1;
+	std::vector<string> Direction_Ending1;
+	std::vector<string> Direction_Delta1;
+	std::vector<int> EndListX_Negative1;
+	std::vector<int> EndListY_Negative1;
+	std::vector<string> Direction_Ending_Negative1;
+	std::vector<string> Direction_Delta_Negative1;
+	Detection1 = image_thinning1.clone();
+	DetectionNegative1 = image_thinning_negative1.clone();
+	DetectionObject.EndingDetection(image_thinning1, Detection1, EndListX1, EndListY1, Direction_Ending1);
+	DetectionObject.DeltaDetection(image_thinning1, Detection1, DeltaListX1, DeltaListY1, Direction_Delta1);
+
+	/*DetectionObject.EndingDetectionCN(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	DetectionObject.DeltaDetectionCN(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);*/
+	/*float e1 = 0;
+	float e2 = 0;
+	float time = 0;
+	e1 = cv::getTickCount();
 	DetectionObject.DeltaDetectionCN(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+	e2 = cv::getTickCount();
+	time = (e2 - e1) / cv::getTickFrequency();
+	std::cout << "czas: " << time << std::endl;*/
+	/*Detection = image_thinning.clone();
+	DetectionObject.EndingDetectionCN(image_thinning, Detection, EndListX, EndListY, Direction_Ending);
+	time = 0;
+	e1 = 0;
+	e2 = 0;*/
+
+	/*e1 = cv::getTickCount();
+	DetectionObject.DeltaDetection2(image_thinning, Detection, DeltaListX, DeltaListY, Direction_Delta);
+	e2 = cv::getTickCount();
+	time = (e2 - e1) / cv::getTickFrequency();
+	std::cout << "czas: " << time << std::endl;*/
+
+	//detectopm functions for image - negative
 	DetectionObject.EndingDetection(image_thinning_negative, DetectionNegative, EndListX_Negative, EndListY_Negative, Direction_Ending_Negative);
 	DetectionObject.DeltaDetection(image_thinning_negative, DetectionNegative, DeltaListX_Negative, DeltaListY_Negative, Direction_Delta_Negative);
-	imwrite("Data/MinutiaeDetection.bmp", Detection);
+	imwrite("Data/Program/MinutiaeDetection.bmp", Detection);
+
+	//detection functions dor image1 - negative
+	DetectionObject.EndingDetection(image_thinning_negative1, DetectionNegative1, EndListX_Negative1, EndListY_Negative1, Direction_Ending_Negative1);
+	DetectionObject.DeltaDetection(image_thinning_negative1, DetectionNegative1, DeltaListX_Negative1, DeltaListY_Negative1, Direction_Delta_Negative1);
+	imwrite("Data/Program/MinutiaeDetection1.bmp", Detection1);
 	////////////////////////////////////////////////////////////////////////////////////
 	///TRZEBA BY TERAZ POROWNAC CZY ZAKONCZENIE ODPOWIADA DELCIE NA NEGATYWIE I ODWROTNIE
 	///I EWENTUALNIE WYCZYSCIC TO CO SIE NIE POKRYWA - TO ALBO W BLOKU DETECTION ALBO FALSE MINUTIAE CLEANER
 	///KOLEJNA SPRAWA TO KIERUNEK MINUCJI - TODO!
 	///KWESTIA ZAPISANIA INFORMACJI O MINUCJACH - JAKI TYP DANYCH?
 	///////////////////////////////////////////////////////////////////////////////////
-	//FALSE MINUTIAE CLEANER/////////////////////////
+	//FALSE MINUTIAE CLEANER///////////////////////// - image
 	FalseMinutiae FalseMinutiaeObject;
 	Mat Minutiae;
 	Mat CleanMinutiae;
@@ -261,7 +229,28 @@ int main(int, char)
 	std::vector<string> OutDirection_Ending;
 	FalseMinutiaeObject.EndingDetectionCleaner(EndListX, EndListY, Minutiae, OutEndListX, OutEndListY, Direction_Ending, OutDirection_Ending);
 	FalseMinutiaeObject.DeltaDetectionCleaner(DeltaListX, DeltaListY, Minutiae, OutDeltaListX, OutDeltaListY);
-	FalseMinutiaeObject.FrameMark(195, 50, 470, 500, OutEndListX, OutEndListY, CleanEndListX, CleanEndListY, OutDeltaListX, OutDeltaListY, CleanDeltaListX, CleanDeltaListY, CleanMinutiae);
+	FalseMinutiaeObject.FrameMark(52, 174, 384, 546, OutEndListX, OutEndListY, CleanEndListX, CleanEndListY, OutDeltaListX, OutDeltaListY, CleanDeltaListX, CleanDeltaListY, CleanMinutiae);
+	imwrite("Data/Program/Minutiae.bmp", CleanMinutiae);
+	/////////////////////////////////////////////////////////////////////////
+
+	//FALSE MINUTIAE CLEANER///////////////////////// - image1
+	Mat Minutiae1;
+	Mat CleanMinutiae1;
+	Minutiae1 = image_thinning1.clone();
+	CleanMinutiae1 = Minutiae1.clone();
+	std::vector<int> OutEndListX1;
+	std::vector<int> OutEndListY1;
+	std::vector<int> OutDeltaListX1;
+	std::vector<int> OutDeltaListY1;
+	std::vector<int> CleanEndListX1;
+	std::vector<int> CleanEndListY1;
+	std::vector<int> CleanDeltaListX1;
+	std::vector<int> CleanDeltaListY1;
+	std::vector<string> OutDirection_Ending1;
+	FalseMinutiaeObject.EndingDetectionCleaner(EndListX1, EndListY1, Minutiae1, OutEndListX1, OutEndListY1, Direction_Ending1, OutDirection_Ending1);
+	FalseMinutiaeObject.DeltaDetectionCleaner(DeltaListX1, DeltaListY1, Minutiae1, OutDeltaListX1, OutDeltaListY1);
+	FalseMinutiaeObject.FrameMark(52, 174, 384, 546, OutEndListX1, OutEndListY1, CleanEndListX1, CleanEndListY1, OutDeltaListX1, OutDeltaListY1, CleanDeltaListX1, CleanDeltaListY1, CleanMinutiae1);
+	imwrite("Data/Program/Minutiae1.bmp", CleanMinutiae1);
 	/////////////////////////////////////////////////////////////////////////
 
 	int a;
