@@ -22,8 +22,8 @@ public:
 	// Erode
 	void Erode(Mat& image);
 
-	// Normalize
-	void Normalize(Mat& image);
+	//Filter pores
+	void FilterPores(Mat& image);
 
 	// overloaded constructor
 	Preprocessing();

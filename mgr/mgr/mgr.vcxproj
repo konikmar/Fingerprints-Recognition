@@ -16,6 +16,7 @@
     <ClCompile Include="FingerprintsRecognition.cpp" />
     <ClCompile Include="GaborFilter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matching.cpp" />
     <ClCompile Include="Preprocessing.cpp" />
     <ClCompile Include="Thinning.cpp" />
   </ItemGroup>
@@ -24,6 +25,7 @@
     <ClInclude Include="FalseMinutiae.h" />
     <ClInclude Include="FingerprintsRecognition.h" />
     <ClInclude Include="GaborFilter.h" />
+    <ClInclude Include="Matching.h" />
     <ClInclude Include="Preprocessing.h" />
     <ClInclude Include="Thinning.h" />
   </ItemGroup>
